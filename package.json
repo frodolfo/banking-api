@@ -1,0 +1,36 @@
+{
+  "name": "onward-banking-api",
+  "version": "0.1.0",
+  "description": "Onward Banking API",
+  "author": "Fred Rodolfo",
+  "license": "ISC",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "http://onward-exxipt@git.codesubmit.io/onward/onward-banking-api-parfzg"
+  },
+  "keywords": [
+    "Onward",
+    "banking",
+    "API"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "watch": "nodemon app.js",
+    "knex": "dotenv/config node_modules/.bin/knex",
+    "migrate": "DOTENV_CONFIG_PATH=.env knex migrate:latest --knexfile ./data/knexfile.js",
+    "unmigrate": "DOTENV_CONFIG_PATH=.env knex migrate:rollback --knexfile ./data/knexfile.js",
+    "seed": "knex seed:run --knexfile ./data/knexfile.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "knex": "^2.2.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}

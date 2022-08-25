@@ -1,8 +1,18 @@
 const router = require('express').Router();
 const { CustomerController } = require('../../components/Customer/');
 
-router.get('/customers', (req, res) => {});
+// TODO: delete this
+console.log(
+  'CustomerController.getCustomers: ',
+  CustomerController.getCustomers
+);
 
+// Customers routes
+router.get('/customers', CustomerController.getCustomers);
 router.post('/customers', CustomerController.createCustomer);
+
+// Accounts routes
+
+// Transactions routes
 
 module.exports = router;

@@ -11,13 +11,21 @@ class CustomerService {
     return customerDAL.createCustomer(name);
   }
 
-  getCustomerByName(customerDTO) {
-    // TODO: delete these
-    console.log('*** inside CustomerService.getCustomerByName');
-    console.log('customerDTO:', customerDTO);
+  getCustomerById(customerId) {
+    return customerDAL.getCustomerById(customerId);
+  }
 
-    const { name } = customerDTO;
-    return customerDAL.getCustomerByName(name);
+  getCustomerByName(customerName) {
+    return customerDAL.getCustomerByName(customerName);
+  }
+
+  deleteCustomerById(customerId) {
+    return customerDAL.deleteCustomerById(customerId);
+  }
+
+  updateCustomerById(customerDTO) {
+    if (!customerDTO) return;
+    return customerDAL.updateCustomerById(customerDTO.id, { ...customerDTO });
   }
 }
 

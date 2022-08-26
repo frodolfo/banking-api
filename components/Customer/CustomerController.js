@@ -23,7 +23,7 @@ class CustomerController {
         res.status(404).json(id);
       }
 
-      res.status(201).json(id);
+      res.status(200).json(id);
     } catch (err) {
       console.error(err);
     }
@@ -60,7 +60,12 @@ class CustomerController {
   async deleteCustomerById(req, res) {
     try {
       const id = await CustomerService.deleteCustomerById(req.params.id);
-      res.status(201).json(id);
+
+      if (id.status && id.status === 'Failure') {
+        res.status(404).json(id);
+      }
+
+      res.status(200).json(id);
     } catch (err) {
       console.error(err);
     }

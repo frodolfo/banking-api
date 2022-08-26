@@ -1,3 +1,4 @@
+const { error } = require('console');
 const db = require('../../data/db');
 
 class AccountDAL {
@@ -9,7 +10,7 @@ class AccountDAL {
     try {
       const accounts = await db('accounts');
 
-      return accounts;
+      return { status: 'Success', data: accounts };
     } catch (err) {
       const errRes = {
         status: 'Failure',
@@ -28,11 +29,13 @@ class AccountDAL {
    */
   async createAccount(accountData) {
     try {
+      if (!accountData) throw error;
+
       const [account] = await db('accounts')
         .insert({ ...accountData })
         .returning(['id', 'account_type', 'customer_id']);
 
-      return account;
+      return { status: 'Success', data: account };
     } catch (err) {
       const errRes = {
         status: 'Failure',
@@ -53,11 +56,13 @@ class AccountDAL {
    */
   async getAccountById(accountId) {
     try {
+      if (!accountId) throw error;
+
       const [account] = await db('accounts')
         .where({ id: `${accountId}` })
         .returning(['id', 'account_type', 'customer_id', 'balance']);
 
-      return account;
+      return { status: 'Success', data: account };
     } catch (err) {
       const errRes = {
         status: 'Failure',
@@ -75,13 +80,24 @@ class AccountDAL {
    * @returns
    */
   async getAccountBalanceById(accountId) {
-    if (!accountId) return;
+    try {
+      if (!accountId) throw error;
 
-    const [balance] = await db('accounts')
-      .select('balance')
-      .where({ id: `${accountId}` });
+      const [balance] = await db('accounts')
+        .select('balance')
+        .where({ id: `${accountId}` });
 
-    return balance;
+      return { status: 'Success', data: balance };
+    } catch (err) {
+      const errRes = {
+        status: 'Failure',
+        description: `Could not retrieve account balance for account ID: ${accountId}`,
+        code: err.code,
+        severity: err.severity,
+      };
+
+      return errRes;
+    }
   }
 
   /**
@@ -91,21 +107,32 @@ class AccountDAL {
    * @returns {Object} account detqils
    */
   async depositByAccountId(accountId, amount) {
-    if (!accountId || !amount) return;
+    try {
+      if (!accountId || !amount) throw error;
 
-    let { balance } = await this.getAccountBalanceById(accountId);
-    let newBalance = parseFloat(balance) + parseFloat(amount);
+      let { balance } = await this.getAccountBalanceById(accountId);
+      let newBalance = parseFloat(balance) + parseFloat(amount);
 
-    const [account] = await db('accounts')
-      .where({ id: `${accountId}` })
-      .update({ balance: newBalance }, [
-        'id',
-        'account_type',
-        'customer_id',
-        'balance',
-      ]);
+      const [account] = await db('accounts')
+        .where({ id: `${accountId}` })
+        .update({ balance: newBalance }, [
+          'id',
+          'account_type',
+          'customer_id',
+          'balance',
+        ]);
 
-    return account;
+      return { status: 'Success', data: account };
+    } catch (err) {
+      const errRes = {
+        status: 'Failure',
+        description: `Could not make a deposit for account ID: ${accountId}`,
+        code: err.code,
+        severity: err.severity,
+      };
+
+      return errRes;
+    }
   }
 
   /**
@@ -115,17 +142,32 @@ class AccountDAL {
    */
   async deleteAccountById(accountId) {
     try {
+      if (!accountId) throw error;
+
       const success = await db('accounts')
         .where({ id: `${accountId}` })
         .del();
 
-      return success === 1
-        ? {
-            result: `Account with ID ${accountId} has been deleted successfully`,
-          }
-        : { result: `Account with ID ${accountId} could not be found` };
+      if (success === 1) {
+        return {
+          status: 'Success',
+          message: `Account with ID ${accountId} has been deleted successfully`,
+        };
+      } else {
+        return {
+          status: 'Failure',
+          message: `Account with ID ${accountId} could not be found`,
+        };
+      }
     } catch (err) {
-      console.error(err.message);
+      const errRes = {
+        status: 'Failure',
+        description: `Could not delete account with ID: ${accountId}`,
+        code: err.code,
+        severity: err.severity,
+      };
+
+      return errRes;
     }
   }
 }

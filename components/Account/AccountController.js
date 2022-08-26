@@ -68,7 +68,7 @@ class AccountController {
         res.status(404).json(account);
       }
 
-      res.status(201).json(account);
+      res.status(200).json(account);
     } catch (err) {
       console.error(err);
     }
@@ -82,7 +82,7 @@ class AccountController {
         res.status(404).json(id);
       }
 
-      res.status(201).json(id);
+      res.status(200).json(id);
     } catch (err) {
       console.error(err);
     }

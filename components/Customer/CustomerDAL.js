@@ -9,7 +9,7 @@ class CustomerDAL {
     try {
       const customers = await db('customers').orderBy('name', 'ASC');
 
-      return customers;
+      return { status: 'Success', data: customers };
     } catch (err) {
       const errRes = {
         status: 'Failure',
@@ -29,11 +29,13 @@ class CustomerDAL {
    */
   async createCustomer(customerName) {
     try {
+      if (!customerName) throw error;
+
       const [id] = await db('customers')
         .insert({ name: `${customerName}` })
         .returning(['id', 'name']);
 
-      return id;
+      return { status: 'Success', data: id };
     } catch (err) {
       const errRes = {
         status: 'Failure',
@@ -54,11 +56,13 @@ class CustomerDAL {
    */
   async getCustomerById(customerId) {
     try {
+      if (!customerId) throw error;
+
       const [id, name] = await db('customers')
         .where({ id: `${customerId}` })
         .returning(['id', 'name']);
 
-      return { id, name };
+      return { status: 'Success', data: { id, name } };
     } catch (err) {
       const errRes = {
         status: 'Failure',
@@ -78,13 +82,17 @@ class CustomerDAL {
    */
   async getCustomerByName(customerName) {
     try {
+      if (!customerName) throw error;
+
       const [id, name] = await db('customers')
         .where({
           name: `${customerName}`,
         })
         .returning(['id', 'name']);
 
-      return { id, name };
+      if (!id || !name) throw error;
+
+      return { status: 'Success', data: { id, name } };
     } catch (err) {
       const errRes = {
         status: 'Failure',
@@ -104,15 +112,25 @@ class CustomerDAL {
    */
   async deleteCustomerById(customerId) {
     try {
+      if (!customerId) throw error;
+
       const success = await db('customers')
         .where({ id: `${customerId}` })
         .del();
 
-      return success === 1
-        ? {
-            result: `Customer with ID ${customerId} has been deleted successfully`,
-          }
-        : { result: `Customer with ID ${customerId} could not be found` };
+      console.log('success: ', success);
+
+      if (success === 1) {
+        return {
+          status: 'Success',
+          message: `Customer with ID ${customerId} has been deleted successfully`,
+        };
+      } else {
+        return {
+          status: 'Failure',
+          message: `Customer with ID ${customerId} could not be found`,
+        };
+      }
     } catch (err) {
       const errRes = {
         status: 'Failure',
@@ -133,11 +151,13 @@ class CustomerDAL {
    */
   async updateCustomerById(customerId, customerData) {
     try {
+      if (!customerId || !customerData) throw error;
+
       const [customer] = await db('customers')
         .where({ id: `${customerId}` })
         .update({ ...customerData }, ['id', 'name']);
 
-      return customer;
+      return { status: 'Success', data: customer };
     } catch (err) {
       const errRes = {
         status: 'Failure',

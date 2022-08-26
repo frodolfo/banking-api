@@ -17,7 +17,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "watch": "nodemon app.js",
+    "dev": "nodemon app.js",
     "knex": "dotenv/config node_modules/.bin/knex",
     "migrate": "DOTENV_CONFIG_PATH=.env knex migrate:latest --knexfile ./data/knexfile.js",
     "unmigrate": "DOTENV_CONFIG_PATH=.env knex migrate:rollback --knexfile ./data/knexfile.js",

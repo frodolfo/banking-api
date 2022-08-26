@@ -1,31 +1,31 @@
-const customerDAL = require('./CustomerDAL');
+const CustomerDAL = require('./CustomerDAL');
 
 class CustomerService {
   getCustomers() {
-    return customerDAL.getCustomers();
+    return CustomerDAL.getCustomers();
   }
 
   createCustomer(customerDTO) {
     if (!customerDTO) return;
     const { name } = customerDTO;
-    return customerDAL.createCustomer(name);
+    return CustomerDAL.createCustomer(name);
   }
 
   getCustomerById(customerId) {
-    return customerDAL.getCustomerById(customerId);
+    return CustomerDAL.getCustomerById(customerId);
   }
 
   getCustomerByName(customerName) {
-    return customerDAL.getCustomerByName(customerName);
+    return CustomerDAL.getCustomerByName(customerName);
   }
 
   deleteCustomerById(customerId) {
-    return customerDAL.deleteCustomerById(customerId);
+    return CustomerDAL.deleteCustomerById(customerId);
   }
 
   updateCustomerById(customerDTO) {
     if (!customerDTO) return;
-    return customerDAL.updateCustomerById(customerDTO.id, { ...customerDTO });
+    return CustomerDAL.updateCustomerById(customerDTO.id, { ...customerDTO });
   }
 }
 

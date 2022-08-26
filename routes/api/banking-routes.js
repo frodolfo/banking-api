@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { CustomerController } = require('../../components/Customer/');
+const { AccountController, CustomerController } = require('../../components/');
 
 // Customers routes
 router.get('/customers', CustomerController.getCustomers);
@@ -10,7 +10,16 @@ router.delete('/customers/ids/:id', CustomerController.deleteCustomerById);
 router.put('/customers/ids/:id', CustomerController.updateCustomerById);
 
 // Accounts routes
+router.get('/accounts', AccountController.getAccounts);
+router.get('/accounts/ids/:id', AccountController.getAccountById);
+router.get(
+  '/accounts/ids/:id/balance',
+  AccountController.getAccountBalanceById
+);
+router.post('/accounts', AccountController.createAccount);
+router.put('/accounts/ids/:id/deposit', AccountController.depositByAccountId);
 
+router.delete('/accounts/ids/:id', AccountController.deleteAccountById);
 // Transactions routes
 
 module.exports = router;

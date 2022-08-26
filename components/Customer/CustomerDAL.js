@@ -6,9 +6,20 @@ class CustomerDAL {
    * @returns Array of customer objects
    */
   async getCustomers() {
-    const customers = await db('customers').orderBy('name', 'ASC');
+    try {
+      const customers = await db('customers').orderBy('name', 'ASC');
 
-    return customers;
+      return customers;
+    } catch (err) {
+      const errRes = {
+        status: 'Failure',
+        description: `Could not retrieve list of customers`,
+        code: err.code,
+        severity: err.severity,
+      };
+
+      return errRes;
+    }
   }
 
   /**
@@ -17,11 +28,23 @@ class CustomerDAL {
    * @returns {Object} id of customer
    */
   async createCustomer(customerName) {
-    const [id] = await db('customers')
-      .insert({ name: `${customerName}` })
-      .returning(['id', 'name']);
+    try {
+      const [id] = await db('customers')
+        .insert({ name: `${customerName}` })
+        .returning(['id', 'name']);
 
-    return id;
+      return id;
+    } catch (err) {
+      const errRes = {
+        status: 'Failure',
+        description: `Could not create new customer`,
+        code: err.code,
+        severity: err.severity,
+        payload: { name: `${customerName}` },
+      };
+
+      return errRes;
+    }
   }
 
   /**
@@ -30,11 +53,22 @@ class CustomerDAL {
    * @returns {Object} id and name
    */
   async getCustomerById(customerId) {
-    const [id, name] = await db('customers')
-      .where({ id: `${customerId}` })
-      .returning(['id', 'name']);
+    try {
+      const [id, name] = await db('customers')
+        .where({ id: `${customerId}` })
+        .returning(['id', 'name']);
 
-    return { id, name };
+      return { id, name };
+    } catch (err) {
+      const errRes = {
+        status: 'Failure',
+        description: `Could not retrieve customer with ID: ${customerId}`,
+        code: err.code,
+        severity: err.severity,
+      };
+
+      return errRes;
+    }
   }
 
   /**
@@ -43,13 +77,24 @@ class CustomerDAL {
    * @returns {Object} id and name
    */
   async getCustomerByName(customerName) {
-    const [id, name] = await db('customers')
-      .where({
-        name: `${customerName}`,
-      })
-      .returning(['id', 'name']);
+    try {
+      const [id, name] = await db('customers')
+        .where({
+          name: `${customerName}`,
+        })
+        .returning(['id', 'name']);
 
-    return { id, name };
+      return { id, name };
+    } catch (err) {
+      const errRes = {
+        status: 'Failure',
+        description: `Could not retrieve customer with name: ${customerName}`,
+        code: err.code,
+        severity: err.severity,
+      };
+
+      return errRes;
+    }
   }
 
   /**
@@ -69,7 +114,14 @@ class CustomerDAL {
           }
         : { result: `Customer with ID ${customerId} could not be found` };
     } catch (err) {
-      console.error(err.message);
+      const errRes = {
+        status: 'Failure',
+        description: `Could not delete customer with ID: ${customerId}`,
+        code: err.code,
+        severity: err.severity,
+      };
+
+      return errRes;
     }
   }
 
@@ -87,7 +139,15 @@ class CustomerDAL {
 
       return customer;
     } catch (err) {
-      console.error(err.message);
+      const errRes = {
+        status: 'Failure',
+        description: `Could not update customer with ID: ${customerId}`,
+        code: err.code,
+        severity: err.severity,
+        payload: customerData,
+      };
+
+      return errRes;
     }
   }
 }

@@ -4,7 +4,12 @@ class CustomerController {
   async getCustomers(req, res) {
     try {
       const customers = await CustomerService.getCustomers();
-      res.status(201).json(customers);
+
+      if (customers.status && customers.status === 'Failure') {
+        res.status(404).json(customers);
+      }
+
+      res.status(200).json(customers);
     } catch (err) {
       console.error(err);
     }
@@ -13,6 +18,11 @@ class CustomerController {
   async createCustomer(req, res) {
     try {
       const id = await CustomerService.createCustomer(req.body);
+
+      if (id.status && id.status === 'Failure') {
+        res.status(404).json(id);
+      }
+
       res.status(201).json(id);
     } catch (err) {
       console.error(err);
@@ -22,7 +32,12 @@ class CustomerController {
   async getCustomerById(req, res) {
     try {
       const id = await CustomerService.getCustomerById(req.params.id);
-      res.status(201).json(id);
+
+      if (id.status && id.status === 'Failure') {
+        res.status(404).json(id);
+      }
+
+      res.status(200).json(id);
     } catch (err) {
       console.error(err);
     }
@@ -31,7 +46,12 @@ class CustomerController {
   async getCustomerByName(req, res) {
     try {
       const id = await CustomerService.getCustomerByName(req.params.name);
-      res.status(201).json(id);
+
+      if (id.status && id.status === 'Failure') {
+        res.status(404).json(id);
+      }
+
+      res.status(200).json(id);
     } catch (err) {
       console.error(err);
     }
@@ -49,6 +69,11 @@ class CustomerController {
   async updateCustomerById(req, res) {
     try {
       const id = await CustomerService.updateCustomerById(req.body);
+
+      if (id.status && id.status === 'Failure') {
+        res.status(404).json(id);
+      }
+
       res.status(201).json(id);
     } catch (err) {
       console.error(err);

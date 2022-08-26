@@ -6,9 +6,19 @@ class AccountDAL {
    * @returns Array of accounts objects
    */
   async getAccounts() {
-    const accounts = await db('accounts');
+    try {
+      const accounts = await db('accounts');
 
-    return accounts;
+      return accounts;
+    } catch (err) {
+      const errRes = {
+        status: 'Failure',
+        description: `Could not retrieve list of accounts`,
+        code: err.code,
+        severity: err.severity,
+      };
+      return errRes;
+    }
   }
 
   /**
@@ -17,11 +27,23 @@ class AccountDAL {
    * @returns {Object} account details
    */
   async createAccount(accountData) {
-    const [account] = await db('accounts')
-      .insert({ ...accountData })
-      .returning(['id', 'account_type', 'customer_id']);
+    try {
+      const [account] = await db('accounts')
+        .insert({ ...accountData })
+        .returning(['id', 'account_type', 'customer_id']);
 
-    return account;
+      return account;
+    } catch (err) {
+      const errRes = {
+        status: 'Failure',
+        description: `Could not create new account`,
+        code: err.code,
+        severity: err.severity,
+        payload: accountData,
+      };
+
+      return errRes;
+    }
   }
 
   /**
@@ -30,11 +52,21 @@ class AccountDAL {
    * @returns {Object} account detqils
    */
   async getAccountById(accountId) {
-    const [account] = await db('accounts')
-      .where({ id: `${accountId}` })
-      .returning(['id', 'account_type', 'customer_id', 'balance']);
+    try {
+      const [account] = await db('accounts')
+        .where({ id: `${accountId}` })
+        .returning(['id', 'account_type', 'customer_id', 'balance']);
 
-    return account;
+      return account;
+    } catch (err) {
+      const errRes = {
+        status: 'Failure',
+        description: `Could not retrieve account with ID: ${accountId}`,
+        code: err.code,
+        severity: err.severity,
+      };
+      return errRes;
+    }
   }
 
   /**

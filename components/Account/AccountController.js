@@ -4,7 +4,12 @@ class AccountController {
   async getAccounts(req, res) {
     try {
       const accounts = await AccountService.getAccounts();
-      res.status(201).json(accounts);
+
+      if (accounts.status && accounts.status === 'Failure') {
+        res.status(404).json(accounts);
+      }
+
+      res.status(200).json(accounts);
     } catch (err) {
       console.error(err);
     }
@@ -13,6 +18,11 @@ class AccountController {
   async createAccount(req, res) {
     try {
       const account = await AccountService.createAccount(req.body);
+
+      if (account.status && account.status === 'Failure') {
+        res.status(404).json(account);
+      }
+
       res.status(201).json(account);
     } catch (err) {
       console.error(err);
@@ -22,7 +32,12 @@ class AccountController {
   async getAccountById(req, res) {
     try {
       const account = await AccountService.getAccountById(req.params.id);
-      res.status(201).json(account);
+
+      if (account.status && account.status === 'Failure') {
+        res.status(404).json(account);
+      }
+
+      res.status(200).json(account);
     } catch (err) {
       console.error(err);
     }
@@ -31,7 +46,12 @@ class AccountController {
   async getAccountBalanceById(req, res) {
     try {
       const balance = await AccountService.getAccountBalanceById(req.params.id);
-      res.status(201).json(balance);
+
+      if (balance.status && balance.status === 'Failure') {
+        res.status(404).json(balance);
+      }
+
+      res.status(200).json(balance);
     } catch (err) {
       console.error(err);
     }
@@ -43,37 +63,30 @@ class AccountController {
         req.params.id,
         req.body
       );
+
+      if (account.status && account.status === 'Failure') {
+        res.status(404).json(account);
+      }
+
       res.status(201).json(account);
     } catch (err) {
       console.error(err);
     }
   }
-  //   async getCustomerByName(req, res) {
-  //     try {
-  //       const id = await AccountService.getCustomerByName(req.params.name);
-  //       res.status(201).json(id);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   }
 
   async deleteAccountById(req, res) {
     try {
       const id = await AccountService.deleteAccountById(req.params.id);
+
+      if (id.status && id.status === 'Failure') {
+        res.status(404).json(id);
+      }
+
       res.status(201).json(id);
     } catch (err) {
       console.error(err);
     }
   }
-
-  //   async updateCustomerById(req, res) {
-  //     try {
-  //       const id = await AccountService.updateCustomerById(req.body);
-  //       res.status(201).json(id);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   }
 }
 
 module.exports = new AccountController();

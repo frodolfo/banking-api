@@ -1,6 +1,8 @@
 const router = require('express').Router();
-const bankingRoutes = require('./banking-routes');
+const accountRoutes = require('./accountRoutes');
+const customerRoutes = require('./customerRoutes');
 
-router.use('/api', bankingRoutes);
+router.use('/api', accountRoutes);
+router.use('/api', customerRoutes);
 
 module.exports = router;

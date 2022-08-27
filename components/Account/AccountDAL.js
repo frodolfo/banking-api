@@ -110,8 +110,11 @@ class AccountDAL {
     try {
       if (!accountId || !amount) throw error;
 
-      let { balance } = await this.getAccountBalanceById(accountId);
-      let newBalance = parseFloat(balance) + parseFloat(amount);
+      let { status, data } = await this.getAccountBalanceById(accountId);
+
+      if (status === 'Failure') throw error;
+
+      let newBalance = parseFloat(data.balance || 0.0) + parseFloat(amount);
 
       const [account] = await db('accounts')
         .where({ id: `${accountId}` })
@@ -127,6 +130,107 @@ class AccountDAL {
       const errRes = {
         status: 'Failure',
         description: `Could not make a deposit for account ID: ${accountId}`,
+        code: err.code,
+        severity: err.severity,
+      };
+
+      return errRes;
+    }
+  }
+
+  /**
+   *
+   * @param {String} accountId - account UUID
+   * @param {Float} amount - amount to withdraw
+   * @returns
+   */
+  async withdrawByAccountId(accountId, amount) {
+    try {
+      if (!accountId || !amount) throw error;
+
+      let { status, data } = await this.getAccountBalanceById(accountId);
+
+      if (status === 'Failure') throw error;
+
+      let newBalance = parseFloat(data.balance || 0.0) - parseFloat(amount);
+
+      if (newBalance < 0.0) {
+        // Insufficient Funds - throw an errors
+        return { status: 'Failure', message: 'Insufficient funds' };
+      }
+
+      const [account] = await db('accounts')
+        .where({ id: `${accountId}` })
+        .update({ balance: newBalance }, [
+          'id',
+          'account_type',
+          'customer_id',
+          'balance',
+        ]);
+
+      return { status: 'Success', data: account };
+    } catch (err) {
+      const errRes = {
+        status: 'Failure',
+        description: `Could not make a deposit for account ID: ${accountId}`,
+        code: err.code,
+        severity: err.severity,
+      };
+
+      return errRes;
+    }
+  }
+
+  /**
+   *
+   * @param {String} fromAccountId - source account UUID
+   * @param {Object} transferData - transfer payload
+   * @returns
+   */
+  async transferAmountByAccountId(fromAccountId, transferData) {
+    try {
+      if (!transferData) throw error;
+      const { toAccountId, amount } = transferData;
+
+      if (!fromAccountId || !toAccountId || !amount || isNaN(amount))
+        throw error;
+
+      const { status, data } = await this.getAccountBalanceById(fromAccountId);
+      if (status === 'Failure') throw error;
+
+      const fromCurrentBalance = parseFloat(data.balance);
+
+      const withdrawResponse = await this.withdrawByAccountId(
+        fromAccountId,
+        amount
+      );
+
+      if (withdrawResponse.status === 'Failure') {
+        // Insufficient Funds
+        return withdrawResponse;
+      }
+
+      const depositResponse = await this.depositByAccountId(
+        toAccountId,
+        amount
+      );
+
+      if (depositResponse.status === 'Failure') {
+        return depositResponse;
+      }
+
+      return {
+        status: 'Success',
+        data: {
+          fromAccount: withdrawResponse,
+          toAccount: depositResponse,
+          transferredAmount: amount,
+        },
+      };
+    } catch (err) {
+      const errRes = {
+        status: 'Failure',
+        description: `Could not fulfill transfer`,
         code: err.code,
         severity: err.severity,
       };

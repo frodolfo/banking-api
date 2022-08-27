@@ -24,7 +24,21 @@ class AccountService {
     return AccountDAL.depositByAccountId(accountId, accountDTO.amount);
   }
 
+  withdrawByAccountId(accountId, accountDTO) {
+    if (!accountDTO) return;
+
+    return AccountDAL.withdrawByAccountId(accountId, accountDTO.amount);
+  }
+
+  transferAmountByAccountId(accountId, transferDTO) {
+    if (!accountId || !transferDTO) return;
+
+    return AccountDAL.transferAmountByAccountId(accountId, transferDTO);
+  }
+
   deleteAccountById(accountId) {
+    if (!accountId) return;
+
     return AccountDAL.deleteAccountById(accountId);
   }
 }

@@ -118,8 +118,6 @@ class CustomerDAL {
         .where({ id: `${customerId}` })
         .del();
 
-      console.log('success: ', success);
-
       if (success === 1) {
         return {
           status: 'Success',

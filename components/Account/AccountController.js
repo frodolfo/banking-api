@@ -74,6 +74,40 @@ class AccountController {
     }
   }
 
+  async withdrawByAccountId(req, res) {
+    try {
+      const account = await AccountService.withdrawByAccountId(
+        req.params.id,
+        req.body
+      );
+
+      if (account.status && account.status === 'Failure') {
+        res.status(404).json(account);
+      }
+
+      res.status(200).json(account);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async transferAmountByAccountId(req, res) {
+    try {
+      const account = await AccountService.transferAmountByAccountId(
+        req.params.id,
+        req.body
+      );
+
+      if (account.status && account.status === 'Failure') {
+        res.status(404).json(account);
+      }
+
+      res.status(200).json(account);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   async deleteAccountById(req, res) {
     try {
       const id = await AccountService.deleteAccountById(req.params.id);

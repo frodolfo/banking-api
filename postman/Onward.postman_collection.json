@@ -259,7 +259,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/api/v1/accounts/ids/9f0aad2d-6181-46ad-9b48-0cb733bc8a10",
+							"raw": "http://localhost:3001/api/v1/accounts/ids/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -270,7 +270,13 @@
 								"v1",
 								"accounts",
 								"ids",
-								"9f0aad2d-6181-46ad-9b48-0cb733bc8a10"
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "589d3ea0-f222-4c84-8590-2a75067567d7"
+								}
 							]
 						}
 					},
@@ -282,7 +288,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/api/v1/accounts/ids/9f0aad2d-6181-46ad-9b48-0cb733bc8a10/balance",
+							"raw": "http://localhost:3001/api/v1/accounts/ids/:id/balance",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -293,8 +299,14 @@
 								"v1",
 								"accounts",
 								"ids",
-								"9f0aad2d-6181-46ad-9b48-0cb733bc8a10",
+								":id",
 								"balance"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "589d3ea0-f222-4c84-8590-2a75067567d7"
+								}
 							]
 						}
 					},
@@ -303,11 +315,11 @@
 				{
 					"name": "UPDATE Account Deposit By ID",
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"amount\": 200.00\n}",
+							"raw": "{\n    \"amount\": 100.00\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -315,7 +327,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3001/api/v1/accounts/ids/9f0aad2d-6181-46ad-9b48-0cb733bc8a10/deposit",
+							"raw": "http://localhost:3001/api/v1/accounts/ids/:id/deposit",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -326,8 +338,92 @@
 								"v1",
 								"accounts",
 								"ids",
-								"9f0aad2d-6181-46ad-9b48-0cb733bc8a10",
+								":id",
 								"deposit"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "9f0aad2d-6181-46ad-9b48-0cb733bc8a10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Account Withdrawal by ID",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 300.00\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/v1/accounts/ids/:id/withdraw",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"ids",
+								":id",
+								"withdraw"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "589d3ea0-f222-4c84-8590-2a75067567d7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Transfer Amount By ID",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"toAccountId\": \"9f0aad2d-6181-46ad-9b48-0cb733bc8a10\",\n    \"amount\": 200.00\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/v1/accounts/ids/:id/transfer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"ids",
+								":id",
+								"transfer"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "589d3ea0-f222-4c84-8590-2a75067567d7"
+								}
 							]
 						}
 					},

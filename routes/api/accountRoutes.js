@@ -9,7 +9,15 @@ router.get(
   AccountController.getAccountBalanceById
 );
 router.post('/accounts', AccountController.createAccount);
-router.put('/accounts/ids/:id/deposit', AccountController.depositByAccountId);
+router.patch('/accounts/ids/:id/deposit', AccountController.depositByAccountId);
+router.patch(
+  '/accounts/ids/:id/withdraw',
+  AccountController.withdrawByAccountId
+);
+router.patch(
+  '/accounts/ids/:id/transfer',
+  AccountController.transferAmountByAccountId
+);
 router.delete('/accounts/ids/:id', AccountController.deleteAccountById);
 
 module.exports = router;

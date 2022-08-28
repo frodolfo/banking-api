@@ -1,8 +1,8 @@
 const CustomerDAL = require('./CustomerDAL');
 
 class CustomerService {
-  getCustomers() {
-    return CustomerDAL.getCustomers();
+  getCustomers(page, limit) {
+    return CustomerDAL.getCustomers(page, limit);
   }
 
   createCustomer(customerDTO) {

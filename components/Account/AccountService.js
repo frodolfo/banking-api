@@ -1,8 +1,8 @@
 const AccountDAL = require('./AccountDAL');
 
 class AccountService {
-  getAccounts() {
-    return AccountDAL.getAccounts();
+  getAccounts(page, limit) {
+    return AccountDAL.getAccounts(page, limit);
   }
 
   createAccount(accountDTO) {
@@ -10,8 +10,8 @@ class AccountService {
     return AccountDAL.createAccount(accountDTO);
   }
 
-  getAccountById(accountId) {
-    return AccountDAL.getAccountById(accountId);
+  getAccountsById(accountId) {
+    return AccountDAL.getAccountsById(accountId);
   }
 
   getAccountBalanceById(accountId) {

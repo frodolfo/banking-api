@@ -3,7 +3,10 @@ const AccountService = require('./AccountService');
 class AccountController {
   async getAccounts(req, res) {
     try {
-      const accounts = await AccountService.getAccounts();
+      let page = req.query?.page || 0;
+      let limit = req.query?.limit || 10;
+
+      const accounts = await AccountService.getAccounts(page, limit);
 
       if (accounts.status && accounts.status === 'Failure') {
         res.status(404).json(accounts);
@@ -29,9 +32,9 @@ class AccountController {
     }
   }
 
-  async getAccountById(req, res) {
+  async getAccountsById(req, res) {
     try {
-      const account = await AccountService.getAccountById(req.params.id);
+      const account = await AccountService.getAccountsById(req.params.id);
 
       if (account.status && account.status === 'Failure') {
         res.status(404).json(account);

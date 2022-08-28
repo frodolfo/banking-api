@@ -4,11 +4,18 @@ const db = require('../../data/db');
 class AccountDAL {
   /**
    *
-   * @returns Array of accounts objects
+   * @param {Number} pageNum - page number
+   * @param {Number} maxRecords - maximum number of records per page
+   * @returns
    */
-  async getAccounts() {
+  async getAccounts(pageNum, maxRecords) {
+    let pageOffset = !isNaN(pageNum) ? (pageNum > 0 ? pageNum - 1 : 0) : 0;
+    let maxPerPage = !isNaN(maxRecords) ? (maxRecords > 0 ? maxRecords : 1) : 1;
+
     try {
-      const accounts = await db('accounts');
+      const accounts = await db('accounts')
+        .limit(maxPerPage)
+        .offset(pageOffset * maxPerPage, { skipBinding: true });
 
       return { status: 'Success', data: accounts };
     } catch (err) {
@@ -54,7 +61,7 @@ class AccountDAL {
    * @param {String} accountId - account UUID
    * @returns {Object} account detqils
    */
-  async getAccountById(accountId) {
+  async getAccountsById(accountId) {
     try {
       if (!accountId) throw error;
 

@@ -3,7 +3,7 @@ const { AccountController } = require('../../components/');
 
 // Accounts routes
 router.get('/accounts', AccountController.getAccounts);
-router.get('/accounts/ids/:id', AccountController.getAccountById);
+router.get('/accounts/ids/:id', AccountController.getAccountsById);
 router.get(
   '/accounts/ids/:id/balance',
   AccountController.getAccountBalanceById

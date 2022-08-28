@@ -3,7 +3,10 @@ const CustomerService = require('./CustomerService');
 class CustomerController {
   async getCustomers(req, res) {
     try {
-      const customers = await CustomerService.getCustomers();
+      let page = req.query?.page || 0;
+      let limit = req.query?.limit || 10;
+
+      const customers = await CustomerService.getCustomers(page, limit);
 
       if (customers.status && customers.status === 'Failure') {
         res.status(404).json(customers);

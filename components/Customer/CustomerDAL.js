@@ -5,9 +5,15 @@ class CustomerDAL {
    *
    * @returns Array of customer objects
    */
-  async getCustomers() {
+  async getCustomers(pageNum, maxRecords) {
+    let pageOffset = !isNaN(pageNum) ? (pageNum > 0 ? pageNum - 1 : 0) : 0;
+    let maxPerPage = !isNaN(maxRecords) ? (maxRecords > 0 ? maxRecords : 1) : 1;
+
     try {
-      const customers = await db('customers').orderBy('name', 'ASC');
+      const customers = await db('customers')
+        .limit(maxPerPage)
+        .offset(pageOffset * maxPerPage, { skipBinding: true })
+        .orderBy('name', 'ASC');
 
       return { status: 'Success', data: customers };
     } catch (err) {

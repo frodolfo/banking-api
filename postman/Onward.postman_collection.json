@@ -10,7 +10,7 @@
 			"name": "Customers",
 			"item": [
 				{
-					"name": "GET Customers",
+					"name": "Get All Customers",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -43,7 +43,7 @@
 					"response": []
 				},
 				{
-					"name": "POST Customers",
+					"name": "Add New Customer",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -73,7 +73,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Customer By Name",
+					"name": "Get Customer By Name",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -102,7 +102,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Customer By ID",
+					"name": "Get Customer By ID",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -131,7 +131,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE Customer By ID",
+					"name": "Delete Customer By ID",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -160,7 +160,7 @@
 					"response": []
 				},
 				{
-					"name": "UPDATE Customer Name By ID",
+					"name": "Update Customer Name By ID",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -203,7 +203,7 @@
 			"name": "Accounts",
 			"item": [
 				{
-					"name": "GET Accounts",
+					"name": "Get All Accounts",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -224,7 +224,7 @@
 					"response": []
 				},
 				{
-					"name": "POST Accounts",
+					"name": "Create New Account",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -254,7 +254,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Account By ID",
+					"name": "Get Account By ID",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -283,7 +283,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Account Balance By ID",
+					"name": "Get Account Balance By ID",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -313,7 +313,7 @@
 					"response": []
 				},
 				{
-					"name": "UPDATE Account Deposit By ID",
+					"name": "Deposit Money Into Account By ID",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -352,7 +352,7 @@
 					"response": []
 				},
 				{
-					"name": "UPDATE Account Withdrawal by ID",
+					"name": "Withdraw Amount from Account by ID",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -391,7 +391,7 @@
 					"response": []
 				},
 				{
-					"name": "UPDATE Transfer Amount By ID",
+					"name": "Transfer Amount By Account ID",
 					"request": {
 						"method": "PATCH",
 						"header": [],

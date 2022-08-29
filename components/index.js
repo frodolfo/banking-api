@@ -5,4 +5,7 @@ module.exports = {
   CustomerController: require('./Customer/CustomerController'),
   CustomerDAL: require('./Customer/CustomerDAL'),
   CustomerService: require('./Customer/CustomerService'),
+  TransactionController: require('./Transaction/TransactionController'),
+  TransactionDAL: require('./Transaction/TransactionDAL'),
+  TransactionService: require('./Transaction/TransactionService'),
 };

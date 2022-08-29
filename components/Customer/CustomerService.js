@@ -19,6 +19,10 @@ class CustomerService {
     return CustomerDAL.getCustomerByName(customerName);
   }
 
+  getCustomerAccountsById(customerId) {
+    return CustomerDAL.getCustomerAccountsById(customerId);
+  }
+
   deleteCustomerById(customerId) {
     return CustomerDAL.deleteCustomerById(customerId);
   }

@@ -1,5 +1,5 @@
 const db = require('../../data/db');
-
+const { AccountDAL } = require('../Account/');
 class CustomerDAL {
   /**
    *
@@ -103,6 +103,29 @@ class CustomerDAL {
       const errRes = {
         status: 'Failure',
         description: `Could not retrieve customer with name: ${customerName}`,
+        code: err.code,
+        severity: err.severity,
+      };
+
+      return errRes;
+    }
+  }
+
+  async getCustomerAccountsById(customerId) {
+    try {
+      if (!customerId) throw error;
+
+      const customer = await this.getCustomerById(customerId);
+      const accounts = await AccountDAL.getAccountsByCustomerId(customerId);
+
+      return {
+        status: 'Success',
+        data: { customer: customer.data, accounts: accounts.data },
+      };
+    } catch (err) {
+      const errRes = {
+        status: 'Failure',
+        description: `Could not retrieve accounts for customer ID: ${customerId}`,
         code: err.code,
         severity: err.severity,
       };

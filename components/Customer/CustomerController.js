@@ -60,6 +60,28 @@ class CustomerController {
     }
   }
 
+  async getCustomerAccountsById(req, res) {
+    try {
+      // TODO: delete this
+      console.log(`req.params.id: ${req.params.id}`);
+
+      const accounts = await CustomerService.getCustomerAccountsById(
+        req.params.id
+      );
+
+      // TODO: delete this
+      console.log(`accounts: ${accounts}`);
+
+      if (accounts.status && accounts.status === 'Failure') {
+        res.status(404).json(accounts);
+      }
+
+      res.status(200).json(accounts);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   async deleteCustomerById(req, res) {
     try {
       const id = await CustomerService.deleteCustomerById(req.params.id);

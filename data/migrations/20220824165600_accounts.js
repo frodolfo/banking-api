@@ -12,7 +12,13 @@ exports.up = async (knex) => {
         .notNullable()
         .references('id')
         .inTable('customers');
-      table.enu('account_type', ['Savings', 'Checking']);
+      table.enu('account_type', [
+        'Savings',
+        'Checking',
+        'External Savings',
+        'External Checking',
+        'Other',
+      ]);
       table.decimal('balance', 14, 2).notNullable();
       table.timestamps(true, true);
     });

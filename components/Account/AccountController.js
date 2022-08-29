@@ -32,9 +32,25 @@ class AccountController {
     }
   }
 
-  async getAccountsById(req, res) {
+  async getAccountDetailsById(req, res) {
     try {
-      const account = await AccountService.getAccountsById(req.params.id);
+      const account = await AccountService.getAccountDetailsById(req.params.id);
+
+      if (account.status && account.status === 'Failure') {
+        res.status(404).json(account);
+      }
+
+      res.status(200).json(account);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getAccountsByCustomerId(req, res) {
+    try {
+      const account = await AccountService.getAccountsByCustomerId(
+        req.params.id
+      );
 
       if (account.status && account.status === 'Failure') {
         res.status(404).json(account);

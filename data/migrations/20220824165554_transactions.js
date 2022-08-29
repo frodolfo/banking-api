@@ -13,6 +13,12 @@ exports.up = async (knex) => {
         .notNullable()
         .references('id')
         .inTable('customers');
+      table.enu('transaction_type', [
+        'Deposit',
+        'Withdrawal',
+        'Transfer',
+        'Receive',
+      ]);
       table.dateTime('transaction_date');
       table.decimal('amount', 14, 2).notNullable();
       table.timestamps(true, true);

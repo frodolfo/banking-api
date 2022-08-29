@@ -10,8 +10,13 @@ class AccountService {
     return AccountDAL.createAccount(accountDTO);
   }
 
-  getAccountsById(accountId) {
-    return AccountDAL.getAccountsById(accountId);
+  getAccountDetailsById(accountDTO) {
+    if (!accountDTO) return;
+    return AccountDAL.getAccountDetailsById(accountDTO);
+  }
+
+  getAccountsByCustomerId(customerId) {
+    return AccountDAL.getAccountsByCustomerId(customerId);
   }
 
   getAccountBalanceById(accountId) {

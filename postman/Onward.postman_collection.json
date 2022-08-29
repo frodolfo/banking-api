@@ -196,6 +196,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GET All Customer Accounts By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/v1/customers/ids/:id/accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"ids",
+								":id",
+								"accounts"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "dfa9753c-f6b7-40ba-9937-330a6a5ce0c0"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -254,12 +284,12 @@
 					"response": []
 				},
 				{
-					"name": "Get Account By ID",
+					"name": "Get Accounts By Customer ID",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/api/v1/accounts/ids/:id",
+							"raw": "http://localhost:3001/api/v1/accounts/customers/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -269,13 +299,42 @@
 								"api",
 								"v1",
 								"accounts",
+								"customers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "dfa9753c-f6b7-40ba-9937-330a6a5ce0c0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ger Account Details By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/v1/api/accounts/ids/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"v1",
+								"api",
+								"accounts",
 								"ids",
 								":id"
 							],
 							"variable": [
 								{
 									"key": "id",
-									"value": "589d3ea0-f222-4c84-8590-2a75067567d7"
+									"value": null
 								}
 							]
 						}

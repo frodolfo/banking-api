@@ -56,16 +56,11 @@ class AccountDAL {
     }
   }
 
-  /**
-   *
-   * @param {String} accountId - account UUID
-   * @returns {Object} account detqils
-   */
-  async getAccountsById(accountId) {
+  async getAccountDetailsById(accountId) {
     try {
       if (!accountId) throw error;
 
-      const [account] = await db('accounts')
+      const account = await db('accounts')
         .where({ id: `${accountId}` })
         .returning(['id', 'account_type', 'customer_id', 'balance']);
 
@@ -73,7 +68,32 @@ class AccountDAL {
     } catch (err) {
       const errRes = {
         status: 'Failure',
-        description: `Could not retrieve account with ID: ${accountId}`,
+        description: `Could not retrieve account details for account ID: ${accountId}`,
+        code: err.code,
+        severity: err.severity,
+      };
+      return errRes;
+    }
+  }
+
+  /**
+   *
+   * @param {String} accountId - account UUID
+   * @returns {Object} account detqils
+   */
+  async getAccountsByCustomerId(customerId) {
+    try {
+      if (!customerId) throw error;
+
+      const account = await db('accounts')
+        .where({ customer_id: `${customerId}` })
+        .returning(['id', 'account_type', 'customer_id', 'balance']);
+
+      return { status: 'Success', data: account };
+    } catch (err) {
+      const errRes = {
+        status: 'Failure',
+        description: `Could not retrieve accounts for customer ID: ${customerId}`,
         code: err.code,
         severity: err.severity,
       };

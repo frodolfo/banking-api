@@ -5,7 +5,7 @@ const endpointsFiles = ['./routes/index.js'];
 
 const config = {
   info: {
-    version: '1.0,0',
+    version: '1.0.0',
     title: 'Onward Banking API',
     description: 'REST API documentation', // by default: ''
   },

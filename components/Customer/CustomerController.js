@@ -62,15 +62,9 @@ class CustomerController {
 
   async getCustomerAccountsById(req, res) {
     try {
-      // TODO: delete this
-      console.log(`req.params.id: ${req.params.id}`);
-
       const accounts = await CustomerService.getCustomerAccountsById(
         req.params.id
       );
-
-      // TODO: delete this
-      console.log(`accounts: ${accounts}`);
 
       if (accounts.status && accounts.status === 'Failure') {
         res.status(404).json(accounts);

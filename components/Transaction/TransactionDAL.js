@@ -41,13 +41,20 @@ class TransactionDAL {
 
       const transaction = await db('transactions')
         .insert({
-          customer_id: `${transactionDTO.customer_id}`,
-          account_id: `${transactionDTO.account_id}`,
-          transaction_date: `${transactionDTO.transaction_date}`,
-          transaction_type: `${transactionDTO.transaction_type}`,
-          amount: parseFloat(`${transactionDTO.amount}`),
+          customer_id: transactionDTO?.customer_id,
+          account_id: transactionDTO?.account_id,
+          transaction_date: transactionDTO?.transaction_date,
+          transaction_type: transactionDTO?.transaction_type,
+          amount: transactionDTO?.amount,
         })
-        .returning(['id', 'transaction_date', 'transaction_type', 'amount']);
+        .returning([
+          'id',
+          'customer_id',
+          'account_id',
+          'transaction_type',
+          'transaction_date',
+          'amount',
+        ]);
 
       return { status: 'Success', data: transaction };
     } catch (err) {

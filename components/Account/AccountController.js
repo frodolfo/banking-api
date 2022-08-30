@@ -10,6 +10,7 @@ class AccountController {
 
       if (accounts.status && accounts.status === 'Failure') {
         res.status(404).json(accounts);
+        return;
       }
 
       res.status(200).json(accounts);
@@ -24,6 +25,7 @@ class AccountController {
 
       if (account.status && account.status === 'Failure') {
         res.status(404).json(account);
+        return;
       }
 
       res.status(201).json(account);
@@ -38,6 +40,7 @@ class AccountController {
 
       if (account.status && account.status === 'Failure') {
         res.status(404).json(account);
+        return;
       }
 
       res.status(200).json(account);
@@ -54,6 +57,7 @@ class AccountController {
 
       if (account.status && account.status === 'Failure') {
         res.status(404).json(account);
+        return;
       }
 
       res.status(200).json(account);
@@ -68,6 +72,7 @@ class AccountController {
 
       if (balance.status && balance.status === 'Failure') {
         res.status(404).json(balance);
+        return;
       }
 
       res.status(200).json(balance);
@@ -85,6 +90,7 @@ class AccountController {
 
       if (account.status && account.status === 'Failure') {
         res.status(404).json(account);
+        return;
       }
 
       res.status(200).json(account);
@@ -102,6 +108,7 @@ class AccountController {
 
       if (account.status && account.status === 'Failure') {
         res.status(404).json(account);
+        return;
       }
 
       res.status(200).json(account);
@@ -119,6 +126,7 @@ class AccountController {
 
       if (account.status && account.status === 'Failure') {
         res.status(404).json(account);
+        return;
       }
 
       res.status(200).json(account);
@@ -133,6 +141,7 @@ class AccountController {
 
       if (id.status && id.status === 'Failure') {
         res.status(404).json(id);
+        return;
       }
 
       res.status(200).json(id);

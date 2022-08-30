@@ -64,11 +64,11 @@ class CustomerDAL {
     try {
       if (!customerId) throw error;
 
-      const [id, name] = await db('customers')
+      const [customer] = await db('customers')
         .where({ id: `${customerId}` })
         .returning(['id', 'name']);
 
-      return { status: 'Success', data: { id, name } };
+      return { status: 'Success', data: customer };
     } catch (err) {
       const errRes = {
         status: 'Failure',

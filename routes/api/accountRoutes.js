@@ -7,6 +7,7 @@ router.get(
   '/accounts/customers/:id',
   AccountController.getAccountsByCustomerId
 );
+router.get('/accounts/ids/:id', AccountController.getAccountDetailsById);
 router.get(
   '/accounts/ids/:id/balance',
   AccountController.getAccountBalanceById

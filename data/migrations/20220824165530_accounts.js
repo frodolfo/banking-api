@@ -12,14 +12,17 @@ exports.up = async (knex) => {
         .uuid('customer_id')
         .notNullable()
         .references('id')
-        .inTable('customers');
-      table.enu('account_type', [
-        'Savings',
-        'Checking',
-        'External Savings',
-        'External Checking',
-        'Other',
-      ]);
+        .inTable('customers')
+        .notNullable();
+      table
+        .enu('account_type', [
+          'Savings',
+          'Checking',
+          'External Savings',
+          'External Checking',
+          'Other',
+        ])
+        .notNullable();
       table.decimal('balance', 14, 2).notNullable();
       table.timestamps(true, true);
     });

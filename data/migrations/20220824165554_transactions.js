@@ -13,19 +13,23 @@ exports.up = async (knex) => {
         .uuid('customer_id')
         .notNullable()
         .references('id')
-        .inTable('customers');
+        .inTable('customers')
+        .notNullable();
       table
         .uuid('account_id')
         .notNullable()
         .references('id')
-        .inTable('accounts');
-      table.enu('transaction_type', [
-        'Activation',
-        'Deposit',
-        'Withdrawal',
-        'Transfer',
-        'Receive',
-      ]);
+        .inTable('accounts')
+        .notNullable();
+      table
+        .enu('transaction_type', [
+          'Activation',
+          'Deposit',
+          'Withdrawal',
+          'Transfer',
+          'Receive',
+        ])
+        .notNullable();
       table.dateTime('transaction_date');
       table.decimal('amount', 14, 2).notNullable();
       table.timestamps(true, true);

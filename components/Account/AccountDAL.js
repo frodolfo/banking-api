@@ -1,3 +1,4 @@
+const { TransactionDAL } = require('../Transaction/');
 const { error } = require('console');
 const db = require('../../data/db');
 
@@ -40,7 +41,21 @@ class AccountDAL {
 
       const [account] = await db('accounts')
         .insert({ ...accountData })
-        .returning(['id', 'account_type', 'customer_id']);
+        .returning([
+          'id',
+          'account_type',
+          'customer_id',
+          'balance',
+          'created_at',
+        ]);
+
+      const [transaction] = TransactionDAL.createTransaction({
+        account_id: account?.id,
+        customer_id: account?.customer_id,
+        amount: account?.balance,
+        transaction_type: 'Activation',
+        transaction_date: account?.created_at,
+      });
 
       return { status: 'Success', data: account };
     } catch (err) {
@@ -56,6 +71,11 @@ class AccountDAL {
     }
   }
 
+  /**
+   *
+   * @param {String} accountId - account UUID
+   * @returns
+   */
   async getAccountDetailsById(accountId) {
     try {
       if (!accountId) throw error;
@@ -142,6 +162,7 @@ class AccountDAL {
       if (status === 'Failure') throw error;
 
       let newBalance = parseFloat(data.balance || 0.0) + parseFloat(amount);
+      let accountDetails;
 
       const [account] = await db('accounts')
         .where({ id: `${accountId}` })
@@ -150,7 +171,28 @@ class AccountDAL {
           'account_type',
           'customer_id',
           'balance',
+          'created_at',
         ]);
+
+      if (account) {
+        // accountDetails = JSON.stringify(account);
+        accountDetails = account;
+      }
+      // Log this transaction
+      if (accountDetails?.id && accountDetails?.created_at) {
+        // TODO: delete this
+        console.log('successful deposit');
+
+        let transactionDetails = {
+          account_id: accountDetails.id,
+          customer_id: accountDetails.customer_id,
+          amount: parseFloat(accountDetails.amount),
+          transaction_type: 'Deposit',
+          transaction_date: accountDetails.created_at,
+        };
+
+        await TransactionDAL.createTransaction(transactionDetails);
+      }
 
       return { status: 'Success', data: account };
     } catch (err) {

@@ -1,4 +1,4 @@
-const customers = require('./customers');
+const customers = require('../mock/customers');
 
 /**
  * @param { import("knex").Knex } knex

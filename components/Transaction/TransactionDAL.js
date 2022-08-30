@@ -42,10 +42,12 @@ class TransactionDAL {
       const transaction = await db('transactions')
         .insert({
           customer_id: `${transactionDTO.customer_id}`,
+          account_id: `${transactionDTO.account_id}`,
           transaction_date: `${transactionDTO.transaction_date}`,
+          transaction_type: `${transactionDTO.transaction_type}`,
           amount: parseFloat(`${transactionDTO.amount}`),
         })
-        .returning(['id', 'transaction_date', 'amount']);
+        .returning(['id', 'transaction_date', 'transaction_type', 'amount']);
 
       return { status: 'Success', data: transaction };
     } catch (err) {
@@ -54,7 +56,7 @@ class TransactionDAL {
         description: `Could not create new transaction`,
         code: err.code,
         severity: err.severity,
-        payload: { name: `${customerName}` },
+        payload: { transaction: `${transactionDTO}` },
       };
 
       return errRes;

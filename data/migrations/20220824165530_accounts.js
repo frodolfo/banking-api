@@ -3,6 +3,7 @@
  * @returns { Promise<void> }
  */
 exports.up = async (knex) => {
+  await knex.schema.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
   const exists = await knex.schema.hasTable('accounts');
   if (!exists) {
     return knex.schema.createTable('accounts', (table) => {

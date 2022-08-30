@@ -3,6 +3,7 @@
  * @returns { Promise<void> }
  */
 exports.up = async (knex) => {
+  await knex.schema.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
   const exists = await knex.schema.hasTable('transactions');
 
   if (!exists) {
@@ -13,7 +14,13 @@ exports.up = async (knex) => {
         .notNullable()
         .references('id')
         .inTable('customers');
+      table
+        .uuid('account_id')
+        .notNullable()
+        .references('id')
+        .inTable('accounts');
       table.enu('transaction_type', [
+        'Activation',
         'Deposit',
         'Withdrawal',
         'Transfer',

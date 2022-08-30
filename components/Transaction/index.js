@@ -1,5 +1,5 @@
 module.exports = {
-  TramsactionController: require('./TramsactionController'),
-  TramsactionDAL: require('./TramsactionDAL'),
-  TramsactionService: require('./TramsactionService'),
+  TransactionController: require('./TransactionController'),
+  TransactionDAL: require('./TransactionDAL'),
+  TransactionService: require('./TransactionService'),
 };

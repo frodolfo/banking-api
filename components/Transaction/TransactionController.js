@@ -1,4 +1,4 @@
-const CustomerService = require('./TransactionService');
+const TransactionService = require('./TransactionService');
 
 class TransactionController {
   async getTransactions(req, res) {
@@ -6,7 +6,7 @@ class TransactionController {
       let page = req.query?.page || 0;
       let limit = req.query?.limit || 10;
 
-      const transactions = await TransactionrService.getTransactions(
+      const transactions = await TransactionService.getTransactions(
         page,
         limit
       );

@@ -21,14 +21,17 @@
     "knex": "dotenv/config node_modules/.bin/knex",
     "migrate": "DOTENV_CONFIG_PATH=.env knex migrate:latest --knexfile ./data/knexfile.js",
     "unmigrate": "DOTENV_CONFIG_PATH=.env knex migrate:rollback --knexfile ./data/knexfile.js",
-    "seed": "knex seed:run --knexfile ./data/knexfile.js"
+    "seed": "knex seed:run --knexfile ./data/knexfile.js",
+    "swagger-autogen": "node swagger.js"
   },
   "dependencies": {
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "knex": "^2.2.0",
     "morgan": "^1.10.0",
-    "pg": "^8.8.0"
+    "pg": "^8.8.0",
+    "swagger-autogen": "^2.21.5",
+    "swagger-ui-express": "^4.5.0"
   },
   "devDependencies": {
     "chai": "^4.3.6",

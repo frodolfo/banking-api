@@ -1,5 +1,8 @@
 const express = require('express');
 const logger = require('morgan');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
+
 const routes = require('./routes');
 
 const PORT = process.env.PORT || 3001;
@@ -34,6 +37,16 @@ APP.use((err, req, res, next) => {
     error: {},
   });
 });
+
+const options = {
+  explorer: true,
+};
+
+APP.use(
+  '/api/v1/docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, options)
+);
 
 APP.listen(PORT, () => {
   console.log(`Onward Banking API server is running on port ${PORT}`);

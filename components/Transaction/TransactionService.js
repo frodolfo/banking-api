@@ -11,6 +11,10 @@ class TransactionService {
     return TransactionDAL.createTransaction(name);
   }
 
+  getTransactionsByCustomerId(customerId) {
+    return TransactionDAL.getTransactionsByCustomerId(customerId);
+  }
+
   getTransactionById(transactionId) {
     return TransactionDAL.getTransactionById(transactionId);
   }

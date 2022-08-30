@@ -198,7 +198,7 @@
 					"response": []
 				},
 				{
-					"name": "GET All Customer Accounts By ID",
+					"name": "Get All Customer Accounts By ID",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -492,7 +492,87 @@
 		},
 		{
 			"name": "Transactions",
-			"item": []
+			"item": [
+				{
+					"name": "Get All Transactions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/v1/transactions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transaction By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/v1/transactions/ids/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"transactions",
+								"ids",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5bb7f90b-f235-4039-a7ff-6351c6854be9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Transactions By Customer ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/v1/transactions/customers/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"transactions",
+								"customers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "41008f71-aa9c-412c-96c6-04cae893033c"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

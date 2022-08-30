@@ -70,6 +70,34 @@ class TransactionDAL {
     }
   }
 
+  async getTransactionsByCustomerId(customerId) {
+    try {
+      if (!customerId) throw error;
+
+      const transactions = await db('transactions')
+        .where({ customer_id: `${customerId}` })
+        .returning([
+          'id',
+          'customer_id',
+          'account_id',
+          'transaction_type',
+          'transaction_date',
+          'amount',
+        ]);
+
+      return { status: 'Success', data: transactions };
+    } catch (err) {
+      const errRes = {
+        status: 'Failure',
+        description: `Could not list of transactions for customer with ID: ${customerId}`,
+        code: err.code,
+        severity: err.severity,
+      };
+
+      return errRes;
+    }
+  }
+
   /**
    *
    * @param {String} transactionId - transaction UUID
@@ -79,7 +107,7 @@ class TransactionDAL {
     try {
       if (!transactionId) throw error;
 
-      const transaction = await db('transactions')
+      const [transaction] = await db('transactions')
         .where({ id: `${transactionId}` })
         .returning(['id', 'customer_id', 'transaction_date', 'amount']);
 

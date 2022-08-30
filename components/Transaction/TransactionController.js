@@ -35,15 +35,33 @@ class TransactionController {
     }
   }
 
-  async getTransactionById(req, res) {
+  async getTransactionsByCustomerId(req, res) {
     try {
-      const id = await TransactionService.getTransactionById(req.params.id);
+      const transaction = await TransactionService.getTransactionsByCustomerId(
+        req.params.id
+      );
 
-      if (id.status && id.status === 'Failure') {
-        res.status(404).json(id);
+      if (transaction.status && transaction.status === 'Failure') {
+        res.status(404).json(transaction);
       }
 
-      res.status(200).json(id);
+      res.status(200).json(transaction);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getTransactionById(req, res) {
+    try {
+      const transaction = await TransactionService.getTransactionById(
+        req.params.id
+      );
+
+      if (transaction.status && transaction.status === 'Failure') {
+        res.status(404).json(transaction);
+      }
+
+      res.status(200).json(transaction);
     } catch (err) {
       console.error(err);
     }

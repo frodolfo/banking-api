@@ -9,7 +9,7 @@ const config = {
     title: 'Onward Banking API',
     description: 'REST API documentation', // by default: ''
   },
-  host: process.env.HOST || 'localhost:3001', // by default: 'localhost:3000'
+  host: process.env.SWAGGER_HOST || 'localhost:3001', // by default: 'localhost:3000'
   basePath: '/api/v1/',
 };
 

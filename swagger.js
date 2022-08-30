@@ -10,7 +10,7 @@ const config = {
     description: 'REST API documentation', // by default: ''
   },
   host: process.env.SWAGGER_HOST || 'localhost:3001', // by default: 'localhost:3000'
-  basePath: '/api/v1/',
+  basePath: '',
 };
 
 swaggerAutogen(outputFile, endpointsFiles, config);

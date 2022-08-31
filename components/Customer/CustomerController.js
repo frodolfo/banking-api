@@ -18,36 +18,60 @@ class CustomerController {
     }
   }
 
-  async createCustomer(req, res) {
+  async createCustomer(req, res, next) {
     try {
-      const id = await CustomerService.createCustomer(req.body);
-
-      if (id.status && id.status === 'Failure') {
-        res.status(404).json(id);
+      if (!req.body.name) {
+        const error = new Error(
+          'Missing required parameter in request payload'
+        );
+        error.code = 422;
+        return next(error);
       }
 
-      res.status(200).json(id);
+      const customer = await CustomerService.createCustomer(req.body);
+
+      if (customer.status && customer.status === 'Failure') {
+        res.status(404).json(customer);
+      }
+
+      res.status(200).json(customer);
     } catch (err) {
       console.error(err);
     }
   }
 
-  async getCustomerById(req, res) {
+  async getCustomerById(req, res, next) {
     try {
-      const id = await CustomerService.getCustomerById(req.params.id);
-
-      if (id.status && id.status === 'Failure') {
-        res.status(404).json(id);
+      if (!req.params.id) {
+        const error = new Error(
+          'Missing required parameter in request payload'
+        );
+        error.code = 422;
+        return next(error);
       }
 
-      res.status(200).json(id);
+      const customer = await CustomerService.getCustomerById(req.params.id);
+
+      if (customer.status && customer.status === 'Failure') {
+        res.status(404).json(customer);
+      }
+
+      res.status(200).json(customer);
     } catch (err) {
       console.error(err);
     }
   }
 
-  async getCustomerByName(req, res) {
+  async getCustomerByName(req, res, next) {
     try {
+      if (!req.params.name) {
+        const error = new Error(
+          'Missing required parameter in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const id = await CustomerService.getCustomerByName(req.params.name);
 
       if (id.status && id.status === 'Failure') {
@@ -60,8 +84,16 @@ class CustomerController {
     }
   }
 
-  async getCustomerAccountsById(req, res) {
+  async getCustomerAccountsById(req, res, next) {
     try {
+      if (!req.params.id) {
+        const error = new Error(
+          'Missing required parameter in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const accounts = await CustomerService.getCustomerAccountsById(
         req.params.id
       );
@@ -76,8 +108,16 @@ class CustomerController {
     }
   }
 
-  async deleteCustomerById(req, res) {
+  async deleteCustomerById(req, res, next) {
     try {
+      if (!req.params.id) {
+        const error = new Error(
+          'Missing required parameter in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const id = await CustomerService.deleteCustomerById(req.params.id);
 
       if (id.status && id.status === 'Failure') {
@@ -90,8 +130,16 @@ class CustomerController {
     }
   }
 
-  async updateCustomerById(req, res) {
+  async updateCustomerById(req, res, next) {
     try {
+      if (!req.body.id || !req.body.name) {
+        const error = new Error(
+          'Missing required parameters in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const id = await CustomerService.updateCustomerById(req.body);
 
       if (id.status && id.status === 'Failure') {

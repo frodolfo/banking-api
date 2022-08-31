@@ -2,9 +2,10 @@ const { TransactionDAL } = require('../Transaction/');
 const { error } = require('console');
 const db = require('../../data/db');
 
+/** Class representing the Account Data Layer */
 class AccountDAL {
   /**
-   *
+   * Get All Accounts
    * @param {Number} pageNum - page number
    * @param {Number} maxRecords - maximum number of records per page
    * @returns
@@ -31,9 +32,9 @@ class AccountDAL {
   }
 
   /**
-   *
-   * @param {Object} accountData - account payload
-   * @returns {Object} account details
+   * Create a new account
+   * @param {object} accountData - account payload
+   * @returns {object} account details
    */
   async createAccount(accountData) {
     try {
@@ -75,9 +76,9 @@ class AccountDAL {
   }
 
   /**
-   *
-   * @param {String} accountId - account UUID
-   * @returns
+   * Get Account Details by Account ID
+   * @param {string} accountId - account UUID
+   * @returns {object} Account Details
    */
   async getAccountDetailsById(accountId) {
     try {

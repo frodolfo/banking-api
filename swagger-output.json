@@ -1,11 +1,25 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0,0",
+    "version": "1.0.0",
     "title": "Onward Banking API",
-    "description": "REST API documentation"
+    "description": "This is a basic CRUD API application with Express and documented with Swagger",
+    "license": {
+      "name": "MIT",
+      "url": "https://spdx.org/licenses/MIT.html"
+    },
+    "contact": {
+      "name": "Fred Rodolfo",
+      "url": "https://www.linkedin.com/in/fredrodolfo/",
+      "email": "fred.rodolfo@gmail.com"
+    }
   },
   "host": "localhost:3001",
+  "servers": [
+    {
+      "url": "http://localhost:3000/docs"
+    }
+  ],
   "basePath": "",
   "schemes": [
     "http"

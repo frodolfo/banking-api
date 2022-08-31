@@ -2,6 +2,7 @@ const AccountService = require('./AccountService');
 
 class AccountController {
   async getAccounts(req, res) {
+    // #swagger.description = 'Retrieves a list of accounts'
     try {
       let page = req.query?.page || 0;
       let limit = req.query?.limit || 10;
@@ -19,8 +20,29 @@ class AccountController {
     }
   }
 
-  async createAccount(req, res) {
+  async createAccount(req, res, next) {
+    /* #swagger.parameters['obj'] = {
+        in: 'body',
+        description: 'Creates a new account for a customer',
+        schema: {
+            customer_id: '41008f71-aa9c-412c-96c6-04cae893033c',
+            account_type: 'Savings',
+            balance: 5000.00
+        }
+    } */
     try {
+      if (
+        !req.body.customer_id ||
+        !req.body.account_type ||
+        !req.body.balance
+      ) {
+        const error = new Error(
+          'Missing required parameters in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const account = await AccountService.createAccount(req.body);
 
       if (account.status && account.status === 'Failure') {
@@ -34,8 +56,16 @@ class AccountController {
     }
   }
 
-  async getAccountDetailsById(req, res) {
+  async getAccountDetailsById(req, res, next) {
     try {
+      if (!req.params.id) {
+        const error = new Error(
+          'Missing required parameter in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const account = await AccountService.getAccountDetailsById(req.params.id);
 
       if (account.status && account.status === 'Failure') {
@@ -49,8 +79,16 @@ class AccountController {
     }
   }
 
-  async getAccountsByCustomerId(req, res) {
+  async getAccountsByCustomerId(req, res, next) {
     try {
+      if (!req.params.id) {
+        const error = new Error(
+          'Missing required parameter in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const account = await AccountService.getAccountsByCustomerId(
         req.params.id
       );
@@ -66,8 +104,16 @@ class AccountController {
     }
   }
 
-  async getAccountBalanceById(req, res) {
+  async getAccountBalanceById(req, res, next) {
     try {
+      if (!req.params.id) {
+        const error = new Error(
+          'Missing required parameter in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const balance = await AccountService.getAccountBalanceById(req.params.id);
 
       if (balance.status && balance.status === 'Failure') {
@@ -81,8 +127,16 @@ class AccountController {
     }
   }
 
-  async depositByAccountId(req, res) {
+  async depositByAccountId(req, res, next) {
     try {
+      if (!req.params.id || !req.body.amount) {
+        const error = new Error(
+          'Missing required parameters in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const account = await AccountService.depositByAccountId(
         req.params.id,
         req.body
@@ -99,8 +153,15 @@ class AccountController {
     }
   }
 
-  async withdrawByAccountId(req, res) {
+  async withdrawByAccountId(req, res, next) {
     try {
+      if (!req.params.id || !req.body.amount) {
+        const error = new Error(
+          'Missing required parameters in request payload'
+        );
+        return next(error);
+      }
+
       const account = await AccountService.withdrawByAccountId(
         req.params.id,
         req.body
@@ -117,8 +178,16 @@ class AccountController {
     }
   }
 
-  async transferAmountByAccountId(req, res) {
+  async transferAmountByAccountId(req, res, next) {
     try {
+      if (!req.params.id || !req.body.toAccountId || !req.body.amount) {
+        const error = new Error(
+          'Missing required parameters in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const account = await AccountService.transferAmountByAccountId(
         req.params.id,
         req.body
@@ -135,8 +204,16 @@ class AccountController {
     }
   }
 
-  async deleteAccountById(req, res) {
+  async deleteAccountById(req, res, next) {
     try {
+      if (!req.params.id) {
+        const error = new Error(
+          'Missing required parameter in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const id = await AccountService.deleteAccountById(req.params.id);
 
       if (id.status && id.status === 'Failure') {

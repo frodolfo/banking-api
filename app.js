@@ -1,7 +1,9 @@
 const express = require('express');
+// const { getSimpleJwksService, secure } = require('express-oauth-jwt');
 const cors = require('cors');
 const helmet = require('helmet');
 const logger = require('morgan');
+const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger-output.json');
 
@@ -18,15 +20,29 @@ const corsOptions = {
   //     callback(new Error());
   //   }
   // },
-  origin: '*', // allow everyone by default
+  origin: '*', // allow anywhere by default
   methods: ['GET', 'POST', 'DELETE', 'PATCH'],
 };
+
+// const oathJwtOptions = {
+//   claims: [
+//     {
+//       name: 'iss',
+//       value: 'https://idsvr.example.com/oauth/v2/oauth-anonymous',
+//     },
+//   ],
+// };
+
+// const jwksService = getSimpleJwksService(
+//   'https://idsvr.example.com/oauth/v2/oauth-anonymous/jwks'
+// );
 
 APP.use(express.urlencoded({ extended: true }));
 APP.use(express.json());
 APP.use(helmet());
 APP.use(cors(corsOptions));
 APP.use(routes);
+// APP.use('/api/*', secure(jwksService, oathJwtOptions));
 
 if (process.env.NODE_ENV !== 'test') {
   APP.use(logger('dev'));

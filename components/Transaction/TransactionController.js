@@ -21,8 +21,22 @@ class TransactionController {
     }
   }
 
-  async createTransaction(req, res) {
+  async createTransaction(req, res, next) {
     try {
+      if (
+        !req.body.customer_id ||
+        !req.body.account_id ||
+        !req.body.transaction_date ||
+        !req.body.transaction_type ||
+        !req.body.amount
+      ) {
+        const error = new Error(
+          'Missing required parameters in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const id = await TransactionService.createTransaction(req.body);
 
       if (id.status && id.status === 'Failure') {
@@ -35,8 +49,16 @@ class TransactionController {
     }
   }
 
-  async getTransactionsByCustomerId(req, res) {
+  async getTransactionsByCustomerId(req, res, next) {
     try {
+      if (!req.params.id) {
+        const error = new Error(
+          'Missing required parameter in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const transaction = await TransactionService.getTransactionsByCustomerId(
         req.params.id
       );
@@ -51,8 +73,16 @@ class TransactionController {
     }
   }
 
-  async getTransactionById(req, res) {
+  async getTransactionById(req, res, next) {
     try {
+      if (!req.params.id) {
+        const error = new Error(
+          'Missing required parameter in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const transaction = await TransactionService.getTransactionById(
         req.params.id
       );
@@ -67,8 +97,16 @@ class TransactionController {
     }
   }
 
-  async deleteTransactionById(req, res) {
+  async deleteTransactionById(req, res, next) {
     try {
+      if (!req.params.id) {
+        const error = new Error(
+          'Missing required parameter in request payload'
+        );
+        error.code = 422;
+        return next(error);
+      }
+
       const id = await TransactionService.deleteTransactionById(req.params.id);
 
       if (id.status && id.status === 'Failure') {

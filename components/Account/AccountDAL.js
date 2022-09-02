@@ -1,4 +1,4 @@
-const { TransactionDAL } = require('../Transaction/');
+const { TransactionDAL } = require('../Transaction');
 const { error } = require('console');
 const db = require('../../data/db');
 
@@ -274,8 +274,6 @@ class AccountDAL {
 
       const { status, data } = await this.getAccountBalanceById(fromAccountId);
       if (status === 'Failure') throw error;
-
-      const fromCurrentBalance = parseFloat(data.balance);
 
       const withdrawResponse = await this.withdrawByAccountId(
         fromAccountId,

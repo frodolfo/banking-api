@@ -1,4 +1,4 @@
-const customers = require('./mock/customers');
+const customers = require('../data/mock/customers');
 
 /**
  * @param { import("knex").Knex } knex

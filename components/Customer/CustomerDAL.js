@@ -68,6 +68,8 @@ class CustomerDAL {
         .where({ id: `${customerId}` })
         .returning(['id', 'name']);
 
+      if (!customer.id || !customer.name) throw error;
+
       return { status: 'Success', data: customer };
     } catch (err) {
       const errRes = {
@@ -90,15 +92,18 @@ class CustomerDAL {
     try {
       if (!customerName) throw error;
 
-      const [id, name] = await db('customers')
+      const [customer] = await db('customers')
+        .returning('id', 'name')
         .where({
           name: `${customerName}`,
-        })
-        .returning(['id', 'name']);
+        });
 
-      if (!id || !name) throw error;
+      if (!customer.id || !customer.name) throw error;
 
-      return { status: 'Success', data: { id, name } };
+      return {
+        status: 'Success',
+        data: { id: customer.id, name: customer.name },
+      };
     } catch (err) {
       const errRes = {
         status: 'Failure',

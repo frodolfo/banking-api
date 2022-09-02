@@ -15,15 +15,19 @@
     "API"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "knex": "dotenv/config node_modules/.bin/knex",
     "migrate": "DOTENV_CONFIG_PATH=.env knex migrate:latest --knexfile ./data/knexfile.js",
+    "migrate:dev": "knex migrate:latest --env development --knexfile ./data/knexfile.js",
+    "migrate:test": "knex migrate:latest --env test --knexfile ./data/knexfile.js",
     "unmigrate": "DOTENV_CONFIG_PATH=.env knex migrate:rollback --knexfile ./data/knexfile.js",
-    "seed": "knex seed:run --knexfile ./data/knexfile.js",
+    "unmigrate:dev": "knex migrate:rollback --env development --knexfile ./data/knexfile.js",
+    "unmigrate:test": "knex migrate:rollback --env test --knexfile ./data/knexfile.js",
+    "seed:dev": "knex seed:run --env development --knexfile ./data/knexfile.js",
+    "seed:test": "knex seed:run --env test --knexfile ./data/knexfile.js",
     "swagger-autogen": "node swagger.js",
-    "test": "PORT=6666 mocha ./components/**/*Test.js --exit"
+    "test": "npm run unmigrate:test && npm run migrate:test && npm run seed:test && NODE_ENV=test PORT=6666 mocha ./components/**/*.test.js --exit"
   },
   "dependencies": {
     "cors": "^2.8.5",

@@ -24,11 +24,11 @@ class TransactionController {
   async createTransaction(req, res, next) {
     try {
       if (
-        !req.body.customer_id ||
-        !req.body.account_id ||
-        !req.body.transaction_date ||
-        !req.body.transaction_type ||
-        !req.body.amount
+        !req.body?.customer_id ||
+        !req.body?.account_id ||
+        !req.body?.transaction_date ||
+        !req.body?.transaction_type ||
+        !req.body?.amount
       ) {
         const error = new Error(
           'Missing required parameters in request payload'
@@ -37,13 +37,13 @@ class TransactionController {
         return next(error);
       }
 
-      const id = await TransactionService.createTransaction(req.body);
+      const transaction = await TransactionService.createTransaction(req.body);
 
-      if (id.status && id.status === 'Failure') {
-        res.status(404).json(id);
+      if (transaction.status && transaction.status === 'Failure') {
+        res.status(404).json(transaction);
       }
 
-      res.status(200).json(id);
+      res.status(201).json(transaction);
     } catch (err) {
       console.error(err);
     }
@@ -51,7 +51,7 @@ class TransactionController {
 
   async getTransactionsByCustomerId(req, res, next) {
     try {
-      if (!req.params.id) {
+      if (!req.params?.id) {
         const error = new Error(
           'Missing required parameter in request payload'
         );
@@ -75,7 +75,7 @@ class TransactionController {
 
   async getTransactionById(req, res, next) {
     try {
-      if (!req.params.id) {
+      if (!req.params?.id) {
         const error = new Error(
           'Missing required parameter in request payload'
         );
@@ -99,7 +99,7 @@ class TransactionController {
 
   async deleteTransactionById(req, res, next) {
     try {
-      if (!req.params.id) {
+      if (!req.params?.id) {
         const error = new Error(
           'Missing required parameter in request payload'
         );
@@ -107,13 +107,15 @@ class TransactionController {
         return next(error);
       }
 
-      const id = await TransactionService.deleteTransactionById(req.params.id);
+      const transaction = await TransactionService.deleteTransactionById(
+        req.params.id
+      );
 
-      if (id.status && id.status === 'Failure') {
-        res.status(404).json(id);
+      if (transaction.status && transaction.status === 'Failure') {
+        res.status(404).json(transaction);
       }
 
-      res.status(200).json(id);
+      res.status(204);
     } catch (err) {
       console.error(err);
     }

@@ -11,10 +11,9 @@ class AccountController {
 
       if (accounts.status && accounts.status === 'Failure') {
         res.status(404).json(accounts);
-        return;
+      } else {
+        res.status(200).json(accounts);
       }
-
-      res.status(200).json(accounts);
     } catch (err) {
       console.error(err);
     }
@@ -32,9 +31,9 @@ class AccountController {
     } */
     try {
       if (
-        !req.body.customer_id ||
-        !req.body.account_type ||
-        !req.body.balance
+        !req.body?.customer_id ||
+        !req.body?.account_type ||
+        !req.body?.balance
       ) {
         const error = new Error(
           'Missing required parameters in request payload'
@@ -47,10 +46,9 @@ class AccountController {
 
       if (account.status && account.status === 'Failure') {
         res.status(404).json(account);
-        return;
+      } else {
+        res.status(201).json(account);
       }
-
-      res.status(201).json(account);
     } catch (err) {
       console.error(err);
     }
@@ -58,7 +56,7 @@ class AccountController {
 
   async getAccountDetailsById(req, res, next) {
     try {
-      if (!req.params.id) {
+      if (!req.params?.id) {
         const error = new Error(
           'Missing required parameter in request payload'
         );
@@ -70,10 +68,9 @@ class AccountController {
 
       if (account.status && account.status === 'Failure') {
         res.status(404).json(account);
-        return;
+      } else {
+        res.status(200).json(account);
       }
-
-      res.status(200).json(account);
     } catch (err) {
       console.error(err);
     }
@@ -81,7 +78,7 @@ class AccountController {
 
   async getAccountsByCustomerId(req, res, next) {
     try {
-      if (!req.params.id) {
+      if (!req.params?.id) {
         const error = new Error(
           'Missing required parameter in request payload'
         );
@@ -95,10 +92,9 @@ class AccountController {
 
       if (account.status && account.status === 'Failure') {
         res.status(404).json(account);
-        return;
+      } else {
+        res.status(200).json(account);
       }
-
-      res.status(200).json(account);
     } catch (err) {
       console.error(err);
     }
@@ -106,7 +102,7 @@ class AccountController {
 
   async getAccountBalanceById(req, res, next) {
     try {
-      if (!req.params.id) {
+      if (!req.params?.id) {
         const error = new Error(
           'Missing required parameter in request payload'
         );
@@ -118,10 +114,9 @@ class AccountController {
 
       if (balance.status && balance.status === 'Failure') {
         res.status(404).json(balance);
-        return;
+      } else {
+        res.status(200).json(balance);
       }
-
-      res.status(200).json(balance);
     } catch (err) {
       console.error(err);
     }
@@ -129,7 +124,7 @@ class AccountController {
 
   async depositByAccountId(req, res, next) {
     try {
-      if (!req.params.id || !req.body.amount) {
+      if (!req.params?.id || !req.body?.amount) {
         const error = new Error(
           'Missing required parameters in request payload'
         );
@@ -144,10 +139,9 @@ class AccountController {
 
       if (account.status && account.status === 'Failure') {
         res.status(404).json(account);
-        return;
+      } else {
+        res.status(201).json(account);
       }
-
-      res.status(200).json(account);
     } catch (err) {
       console.error(err);
     }
@@ -155,7 +149,7 @@ class AccountController {
 
   async withdrawByAccountId(req, res, next) {
     try {
-      if (!req.params.id || !req.body.amount) {
+      if (!req.params?.id || !req.body?.amount) {
         const error = new Error(
           'Missing required parameters in request payload'
         );
@@ -170,9 +164,9 @@ class AccountController {
       if (account.status && account.status === 'Failure') {
         res.status(404).json(account);
         return;
+      } else {
+        res.status(201).json(account);
       }
-
-      res.status(200).json(account);
     } catch (err) {
       console.error(err);
     }
@@ -180,7 +174,7 @@ class AccountController {
 
   async transferAmountByAccountId(req, res, next) {
     try {
-      if (!req.params.id || !req.body.toAccountId || !req.body.amount) {
+      if (!req.params?.id || !req.body?.toAccountId || !req.body?.amount) {
         const error = new Error(
           'Missing required parameters in request payload'
         );
@@ -196,9 +190,9 @@ class AccountController {
       if (account.status && account.status === 'Failure') {
         res.status(404).json(account);
         return;
+      } else {
+        res.status(200).json(account);
       }
-
-      res.status(200).json(account);
     } catch (err) {
       console.error(err);
     }
@@ -206,7 +200,7 @@ class AccountController {
 
   async deleteAccountById(req, res, next) {
     try {
-      if (!req.params.id) {
+      if (!req.params?.id) {
         const error = new Error(
           'Missing required parameter in request payload'
         );
@@ -214,14 +208,16 @@ class AccountController {
         return next(error);
       }
 
-      const id = await AccountService.deleteAccountById(req.params.id);
+      const deleteResult = await AccountService.deleteAccountById(
+        req.params.id
+      );
 
-      if (id.status && id.status === 'Failure') {
+      if (deleteResult.status && deleteResult.status === 'Failure') {
         res.status(404).json(id);
         return;
+      } else {
+        res.status(204);
       }
-
-      res.status(200).json(id);
     } catch (err) {
       console.error(err);
     }

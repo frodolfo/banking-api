@@ -19,26 +19,32 @@ module.exports = {
       max: 10,
     },
     migrations: {
-      directory: './migrations',
+      directory: '../migrations',
     },
-    seeds: { directory: './seeds' },
+    seeds: { directory: '../seeds' },
   },
 
-  testing: {
+  test: {
     client: 'pg',
-    connection: `${process.env.DB_URL}`,
-    migrations: {
-      directory: './migrations',
+    connection: {
+      host: process.env.DB_HOST || 'localhost',
+      port: process.env.DB_PORT || 5432,
+      user: process.env.DB_USER || 'postgres',
+      password: process.env.DB_PASSWORD || 'password',
+      database: process.env_DB_DATABASE || 'onward_test',
     },
-    seeds: { directory: './seeds' },
+    migrations: {
+      directory: '../migrations',
+    },
+    seeds: { directory: '../seeds' },
   },
 
   production: {
     client: 'pg',
     connection: `${process.env.DB_URL}`,
     migrations: {
-      directory: './migrations',
+      directory: '../migrations',
     },
-    seeds: { directory: './seeds' },
+    seeds: { directory: '../seeds' },
   },
 };

@@ -126,7 +126,7 @@ class CustomerController {
       if (deleteResult.status && deleteResult.status === 'Failure') {
         res.status(404).json(deleteResult);
       } else {
-        res.status(204);
+        res.status(200).json(deleteResult);
       }
     } catch (err) {
       console.error(err);
@@ -135,7 +135,7 @@ class CustomerController {
 
   async updateCustomerById(req, res, next) {
     try {
-      if (!req.body?.id || !req.body?.name) {
+      if (!req.params?.id || !req.body?.name) {
         const error = new Error(
           'Missing required parameters in request payload'
         );
@@ -143,7 +143,10 @@ class CustomerController {
         return next(error);
       }
 
-      const customer = await CustomerService.updateCustomerById(req.body);
+      const customer = await CustomerService.updateCustomerById(
+        req.params.id,
+        req.body
+      );
 
       if (customer.status && customer.status === 'Failure') {
         res.status(404).json(customer);

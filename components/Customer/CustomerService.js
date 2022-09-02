@@ -27,9 +27,9 @@ class CustomerService {
     return CustomerDAL.deleteCustomerById(customerId);
   }
 
-  updateCustomerById(customerDTO) {
-    if (!customerDTO) return;
-    return CustomerDAL.updateCustomerById(customerDTO.id, { ...customerDTO });
+  updateCustomerById(customerId, customerDTO) {
+    if (!customerId || !customerDTO) return;
+    return CustomerDAL.updateCustomerById(customerId, customerDTO);
   }
 }
 

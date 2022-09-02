@@ -11,6 +11,6 @@ router.get(
 router.get('/customers/names/:name', CustomerController.getCustomerByName);
 router.post('/customers', CustomerController.createCustomer);
 router.delete('/customers/ids/:id', CustomerController.deleteCustomerById);
-router.put('/customers/ids/:id', CustomerController.updateCustomerById);
+router.patch('/customers/ids/:id', CustomerController.updateCustomerById);
 
 module.exports = router;

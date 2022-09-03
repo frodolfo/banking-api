@@ -27,9 +27,11 @@ describe('Testing Customers', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
+      expect(response).has.property('body');
       expect(response.body).to.be.a('object');
+      expect(response.body).has.property('data');
       expect(response.body.data).to.be.a('array');
-      expect(response.body.data.length).to.above(0);
+      expect(response.body.data.length).to.be.gte(0);
     });
   });
 
@@ -41,23 +43,37 @@ describe('Testing Customers', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
+      expect(response1).has.property('body');
       expect(response1.body).to.be.a('object');
+      expect(response1.body).has.property('data');
+      // We expect an array in the event there are at least
+      // two people with the same name
       expect(response1.body.data).to.be.a('array');
       // Enure the array is not empty
-      expect(response1.body.data.length).to.be.gt(0);
+      expect(response1.body.data.length).to.be.gte(0);
 
-      // Get the name of first customer in the array
-      const customerName = response1.body.data[0].name;
+      if (response1.body.data.length > 0) {
+        expect(response1.body.data[0]).has.property('name');
+        // Get the name of first customer in the array
+        const customerName = response1.body.data[0].name;
+        const response2 = await request(app)
+          .get(`/api/v1/customers/names/${customerName}`)
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200);
 
-      const response2 = await request(app)
-        .get(`/api/v1/customers/names/${customerName}`)
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(200);
+        expect(response2).has.property('body');
+        expect(response2.body).to.be.a('object');
+        expect(response2.body).has.property('data');
+        expect(response2.body.data).to.be.a('array');
+        expect(response1.body.data.length).to.be.gte(0);
 
-      expect(response2.body).to.be.a('object');
-      expect(response2.body.data).to.be.a('object');
-      expect(response2.body.data.name).to.be.equal(`${customerName}`);
+        if (response1.body.data.length > 0) {
+          expect(response2.body.data[0]).has.property('id');
+          expect(response2.body.data[0]).has.property('name');
+          expect(response2.body.data[0].name).to.be.equal(`${customerName}`);
+        }
+      }
     });
   });
 
@@ -69,23 +85,31 @@ describe('Testing Customers', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
+      expect(response1).has.property('body');
       expect(response1.body).to.be.a('object');
+      expect(response1.body).has.property('data');
       expect(response1.body.data).to.be.a('array');
       // Enure the array is not empty
-      expect(response1.body.data.length).to.be.gt(0);
+      expect(response1.body.data.length).to.be.gte(0);
 
-      // Get the ID of first customer in the array
-      const customerId = response1.body.data[0].id;
+      if (response1.body.data.length > 0) {
+        // Get the ID of first customer in the array
+        const customerId = response1.body.data[0].id;
 
-      const response2 = await request(app)
-        .get(`/api/v1/customers/ids/${customerId}`)
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(200);
+        const response2 = await request(app)
+          .get(`/api/v1/customers/ids/${customerId}`)
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200);
 
-      expect(response2.body).to.be.a('object');
-      expect(response2.body.data).to.be.a('object');
-      expect(response2.body.data.id).to.be.equal(`${customerId}`);
+        expect(response2).has.property('body');
+        expect(response2.body).to.be.a('object');
+        expect(response2.body).has.property('data');
+        expect(response2.body.data).to.be.a('object');
+        expect(response2.body.data).has.property('id');
+        expect(response2.body.data.id).to.be.equal(`${customerId}`);
+        expect(response2.body.data).has.property('name');
+      }
     });
   });
 
@@ -100,9 +124,11 @@ describe('Testing Customers', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
+      expect(response).has.property('body');
       expect(response.body).to.be.a('object');
+      expect(response.body).has.property('data');
       expect(response.body.data).to.be.a('object');
-      expect(response.body.data).to.be.a('object');
+      expect(response.body.data).has.property('name');
       expect(response.body.data.name).to.be.equal('Freddie Rodolfo');
     });
   });
@@ -118,25 +144,33 @@ describe('Testing Customers', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
+      expect(response1).has.property('body');
       expect(response1.body).to.be.a('object');
+      expect(response1.body).has.property('data');
       expect(response1.body.data).to.be.a('array');
       // Enure the array is not empty
-      expect(response1.body.data.length).to.be.gt(0);
+      expect(response1.body.data.length).to.be.gte(0);
 
-      // Get the ID of first customer in the array
-      const customerId = response1.body.data[0].id;
-      const newCustomerName = 'John Doe';
+      if (response1.body.data.length > 0) {
+        // Get the ID of first customer in the array
+        const customerId = response1.body.data[0].id;
+        const newCustomerName = 'John Doe';
 
-      const response2 = await request(app)
-        .patch(`/api/v1/customers/ids/${customerId}`)
-        .send({ name: `${newCustomerName}` })
-        .expect('Content-Type', /json/)
-        .expect(201);
+        const response2 = await request(app)
+          .patch(`/api/v1/customers/ids/${customerId}`)
+          .send({ name: `${newCustomerName}` })
+          .expect('Content-Type', /json/)
+          .expect(201);
 
-      expect(response2.body).to.be.a('object');
-      expect(response2.body.data).to.be.a('object');
-      expect(response2.body.data.id).to.be.equal(`${customerId}`);
-      expect(response2.body.data.name).to.be.equal(`${newCustomerName}`);
+        expect(response2).has.property('body');
+        expect(response2.body).to.be.a('object');
+        expect(response2.body).has.property('data');
+        expect(response2.body.data).to.be.a('object');
+        expect(response2.body.data).has.property('id');
+        expect(response2.body.data.id).to.be.equal(`${customerId}`);
+        expect(response2.body.data).has.property('name');
+        expect(response2.body.data.name).to.be.equal(`${newCustomerName}`);
+      }
     });
   });
 
@@ -151,23 +185,29 @@ describe('Testing Customers', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
+      expect(response1).has.property('body');
       expect(response1.body).to.be.a('object');
+      expect(response1.body).has.property('data');
       expect(response1.body.data).to.be.a('array');
       // Enure the array is not empty
-      expect(response1.body.data.length).to.be.gt(0);
+      expect(response1.body.data.length).to.be.gte(0);
 
-      // Get the ID of first customer in the array
-      const customerId = response1.body.data[0].id;
+      if (response1.body.data.length > 0) {
+        // Get the ID of first customer in the array
+        const customerId = response1.body.data[0].id;
 
-      const response2 = await request(app)
-        .delete(`/api/v1/customers/ids/${customerId}`)
-        .set('Accept', 'application/json')
-        .expect(200);
+        const response2 = await request(app)
+          .delete(`/api/v1/customers/ids/${customerId}`)
+          .set('Accept', 'application/json')
+          .expect(200);
 
-      expect(response2.body).to.be.a('object');
-      expect(JSON.parse(response2.text)).to.be.a('object');
-      expect(JSON.parse(response2.text).status).to.be.eq('Success');
-      expect(JSON.parse(response2.text).message).to.contains(`${customerId}`);
+        expect(response2).has.property('body');
+        expect(response2.body).to.be.a('object');
+        expect(response2.body).has.property('status');
+        expect(response2.body.status).to.equals('Success');
+        expect(response2.body).has.property('message');
+        expect(response2.body.message).to.contains(`${customerId}`);
+      }
     });
   });
 });

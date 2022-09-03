@@ -84,11 +84,11 @@ class AccountDAL {
     try {
       if (!accountId) throw error;
 
-      const account = await db('accounts')
+      const [account] = await db('accounts')
         .where({ id: `${accountId}` })
         .returning(['id', 'account_type', 'customer_id', 'balance']);
 
-      return { status: 'Success', data: account };
+      return { status: 'Success', data: { ...account } };
     } catch (err) {
       const errRes = {
         status: 'Failure',
@@ -109,13 +109,13 @@ class AccountDAL {
     try {
       if (!customerId) throw error;
 
-      const account = await db('accounts')
+      const accounts = await db('accounts')
         .where({ customer_id: `${customerId}` })
         .returning(['id', 'account_type', 'customer_id', 'balance']);
 
-      if (!Array.isArray(account) || account.length === 0) throw error;
+      if (!Array.isArray(accounts) || accounts.length === 0) throw error;
 
-      return { status: 'Success', data: account };
+      return { status: 'Success', data: accounts };
     } catch (err) {
       const errRes = {
         status: 'Failure',

@@ -3,27 +3,8 @@ process.env.NODE_ENV = 'test';
 
 const request = require('supertest');
 const expect = require('chai').expect;
+const { getAccounts, getCustomers } = require('../../hooks/useData');
 const app = require('../../app');
-
-const getCustomers = async (app) => {
-  const response = await request(app)
-    .get('/api/v1/customers')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200);
-
-  return response;
-};
-
-const getAccounts = async (app) => {
-  const response = await request(app)
-    .get('/api/v1/accounts')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200);
-
-  return response;
-};
 
 describe('Testing Accounts', () => {
   //   describe('/GET Accounts for Customer by ID', () => {
@@ -194,34 +175,6 @@ describe('Testing Accounts', () => {
     });
   });
 
-  //   describe('/GET Accounts for Customer by ID', () => {
-  //     it('Retrieves no accounts for a customer using provided ID', async () => {
-  //       const response1 = await request(app)
-  //         .get('/api/v1/customers')
-  //         .set('Accept', 'application/json')
-  //         .expect('Content-Type', /json/)
-  //         .expect(200);
-
-  //       expect(response1.body).to.be.a('object');
-  //       expect(response1.body.data).to.be.a('array');
-  //       // Enure the array is not empty
-  //       expect(response1.body.data.length).to.be.gt(0);
-
-  //       // Get the ID of first customer in the array
-  //       const customerid = response1.body.data[0].id;
-
-  //       const response2 = await request(app)
-  //         .get(`/api/v1/accounts/customers/gibberish`)
-  //         .set('Accept', 'application/json')
-  //         .expect('Content-Type', /json/)
-  //         .expect(404);
-
-  //       expect(response2.body).to.be.a('object');
-  //       expect(response2.body.data).to.be.a('array');
-  //       expect(response2.body.data.id).to.be.equal(`${customerid}`);
-  //     });
-  //   });
-
   describe('/GET Account Details by Account ID', () => {
     it('Retrieves an account details by account ID', async () => {
       const response1 = await getAccounts(app);
@@ -254,6 +207,34 @@ describe('Testing Accounts', () => {
     });
   });
 
+  describe('/GET Account Balance by Account ID', () => {
+    it('Retrieves an account balance by account ID', async () => {
+      const response1 = await getAccounts(app);
+
+      expect(response1).has.property('body');
+      expect(response1.body).to.be.a('object');
+      expect(response1.body).has.property('data');
+      expect(response1.body.data).to.be.a('array');
+      // Enure the array is not empty
+      expect(response1.body.data.length).to.be.gt(0);
+
+      // Get the ID of first account in the array
+      const accountId = response1.body.data[0].id;
+
+      const response2 = await request(app)
+        .get(`/api/v1/accounts/ids/${accountId}/balance`)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(response2).has.property('body');
+      expect(response2.body).to.be.a('object');
+      expect(response2.body).has.property('data');
+      expect(response2.body.data).to.be.a('object');
+      expect(response2.body.data).has.property('balance');
+    });
+  });
+
   describe('/GET Accounts by Customer ID', () => {
     it('Retrieves a list of accounts for a customer by customer ID', async () => {
       const response1 = await getCustomers(app);
@@ -263,27 +244,29 @@ describe('Testing Accounts', () => {
       expect(response1.body).has.property('data');
       expect(response1.body.data).to.be.a('array');
       // Enure the array is not empty
-      expect(response1.body.data.length).to.be.gt(0);
+      expect(response1.body.data.length).to.be.gte(0);
 
-      // Get the ID of first customer in the array
-      const customerId = response1.body.data[0].id;
+      if (response1.body.data.length > 0) {
+        // Get the ID of first customer in the array
+        const customerId = response1.body.data[0].id;
 
-      const response2 = await request(app)
-        .get(`/api/v1/accounts/customers/${customerId}`)
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(200);
+        const response2 = await request(app)
+          .get(`/api/v1/accounts/customers/${customerId}`)
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200);
 
-      expect(response2).has.property('body');
-      expect(response2.body).to.be.a('object');
-      expect(response2.body).has.property('data');
-      expect(response2.body.data).to.be.a('array');
-      expect(response2.body.data.length).to.be.gt(0);
-      expect(response2.body.data[0]).has.property('id');
-      expect(response2.body.data[0]).has.property('customer_id');
-      expect(response2.body.data[0].customer_id).to.be.eq(`${customerId}`);
-      expect(response2.body.data[0]).has.property('account_type');
-      expect(response2.body.data[0]).has.property('balance');
+        expect(response2).has.property('body');
+        expect(response2.body).to.be.a('object');
+        expect(response2.body).has.property('data');
+        expect(response2.body.data).to.be.a('array');
+        expect(response2.body.data.length).to.be.gt(0);
+        expect(response2.body.data[0]).has.property('id');
+        expect(response2.body.data[0]).has.property('customer_id');
+        expect(response2.body.data[0].customer_id).to.be.eq(`${customerId}`);
+        expect(response2.body.data[0]).has.property('account_type');
+        expect(response2.body.data[0]).has.property('balance');
+      }
     });
   });
 });

@@ -3,6 +3,7 @@ process.env.NODE_ENV = 'test';
 
 const request = require('supertest');
 const expect = require('chai').expect;
+const { getCustomers } = require('../../hooks/useData');
 const app = require('../../app');
 
 describe('Testing Customers', () => {
@@ -21,11 +22,7 @@ describe('Testing Customers', () => {
    */
   describe('/GET Customers', () => {
     it('returns all customers, limited to 10 per page by default', async () => {
-      const response = await request(app)
-        .get('/api/v1/customers')
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(200);
+      const response = await getCustomers(app);
 
       expect(response).has.property('body');
       expect(response.body).to.be.a('object');
@@ -37,11 +34,7 @@ describe('Testing Customers', () => {
 
   describe('/GET Customer by name', () => {
     it('Retrieves a customer by name', async () => {
-      const response1 = await request(app)
-        .get('/api/v1/customers')
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(200);
+      const response1 = await getCustomers(app);
 
       expect(response1).has.property('body');
       expect(response1.body).to.be.a('object');
@@ -79,11 +72,7 @@ describe('Testing Customers', () => {
 
   describe('/GET Customer by ID', () => {
     it('Retrieves a customer by ID', async () => {
-      const response1 = await request(app)
-        .get('/api/v1/customers')
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(200);
+      const response1 = await getCustomers(app);
 
       expect(response1).has.property('body');
       expect(response1.body).to.be.a('object');
@@ -138,11 +127,7 @@ describe('Testing Customers', () => {
    */
   describe('/PATCH Customer name by ID', () => {
     it("updates a customer's name by ID", async () => {
-      const response1 = await request(app)
-        .get('/api/v1/customers')
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(200);
+      const response1 = await getCustomers(app);
 
       expect(response1).has.property('body');
       expect(response1.body).to.be.a('object');
@@ -179,11 +164,7 @@ describe('Testing Customers', () => {
    */
   describe('/DELETE Customer by ID', () => {
     it('delete a customer by its ID', async () => {
-      const response1 = await request(app)
-        .get('/api/v1/customers')
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(200);
+      const response1 = await getCustomers(app);
 
       expect(response1).has.property('body');
       expect(response1.body).to.be.a('object');

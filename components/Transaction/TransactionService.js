@@ -7,8 +7,8 @@ class TransactionService {
 
   createTransaction(transactionDTO) {
     if (!transactionDTO) return;
-    const { name } = transactionDTO;
-    return TransactionDAL.createTransaction(name);
+
+    return TransactionDAL.createTransaction(transactionDTO);
   }
 
   getTransactionsByCustomerId(customerId) {

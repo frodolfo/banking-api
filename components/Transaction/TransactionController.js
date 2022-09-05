@@ -13,9 +13,9 @@ class TransactionController {
 
       if (transactions.status && transactions.status === 'Failure') {
         res.status(404).json(transactions);
+      } else {
+        res.status(200).json(transactions);
       }
-
-      res.status(200).json(transactions);
     } catch (err) {
       console.error(err);
     }
@@ -36,14 +36,13 @@ class TransactionController {
         error.code = 422;
         return next(error);
       }
-
       const transaction = await TransactionService.createTransaction(req.body);
 
       if (transaction.status && transaction.status === 'Failure') {
         res.status(404).json(transaction);
+      } else {
+        res.status(201).json(transaction);
       }
-
-      res.status(201).json(transaction);
     } catch (err) {
       console.error(err);
     }
@@ -65,9 +64,9 @@ class TransactionController {
 
       if (transaction.status && transaction.status === 'Failure') {
         res.status(404).json(transaction);
+      } else {
+        res.status(200).json(transaction);
       }
-
-      res.status(200).json(transaction);
     } catch (err) {
       console.error(err);
     }
@@ -89,9 +88,9 @@ class TransactionController {
 
       if (transaction.status && transaction.status === 'Failure') {
         res.status(404).json(transaction);
+      } else {
+        res.status(200).json(transaction);
       }
-
-      res.status(200).json(transaction);
     } catch (err) {
       console.error(err);
     }
@@ -113,9 +112,9 @@ class TransactionController {
 
       if (transaction.status && transaction.status === 'Failure') {
         res.status(404).json(transaction);
+      } else {
+        res.status(204);
       }
-
-      res.status(204);
     } catch (err) {
       console.error(err);
     }

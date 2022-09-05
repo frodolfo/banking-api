@@ -183,7 +183,7 @@ class AccountDAL {
       const transactionDetails = {
         account_id: account?.id,
         customer_id: account?.customer_id,
-        amount: account?.balance,
+        amount: parseFloat(amount),
         transaction_type: 'Deposit',
         transaction_date: account?.created_at,
       };
@@ -237,7 +237,7 @@ class AccountDAL {
       const transactionDetails = {
         account_id: account?.id,
         customer_id: account?.customer_id,
-        amount: account?.balance,
+        amount: parseFloat(amount),
         transaction_type: 'Withdrawal',
         transaction_date: account?.created_at,
       };
@@ -288,7 +288,7 @@ class AccountDAL {
       transactionDetails = {
         account_id: withdrawResponse?.id,
         customer_id: withdrawResponse?.customer_id,
-        amount: withdrawResponse?.balance,
+        amount: parseFloat(amount),
         transaction_type: 'Transfer',
         transaction_date: withdrawResponse?.created_at,
       };

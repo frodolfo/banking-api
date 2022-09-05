@@ -39,7 +39,7 @@ class TransactionDAL {
     try {
       if (!transactionDTO) throw error;
 
-      const transaction = await db('transactions')
+      const [transaction] = await db('transactions')
         .insert({
           customer_id: transactionDTO?.customer_id,
           account_id: transactionDTO?.account_id,

@@ -232,6 +232,7 @@ class AccountDAL {
           'account_type',
           'customer_id',
           'balance',
+          'created_at',
         ]);
 
       const transactionDetails = {

@@ -191,7 +191,7 @@ class AccountController {
         res.status(404).json(account);
         return;
       } else {
-        res.status(200).json(account);
+        res.status(201).json(account);
       }
     } catch (err) {
       console.error(err);

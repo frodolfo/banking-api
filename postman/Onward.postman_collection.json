@@ -162,7 +162,7 @@
 				{
 					"name": "Update Customer Name By ID",
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -254,13 +254,73 @@
 					"response": []
 				},
 				{
-					"name": "Create New Account",
+					"name": "Create New Savings Account",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"customer_id\": \"dfa9753c-f6b7-40ba-9937-330a6a5ce0c0\",\n    \"account_type\": \"Checking\",\n    \"balance\": 8250.00\n}",
+							"raw": "{\n    \"customer_id\": '',\n    \"account_type\": \"Savings\",\n    \"balance\": 5000.00\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/v1/accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Checking Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_id\": '',\n    \"account_type\": \"Checking\",\n    \"balance\": 2400.00\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/v1/accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New External Checking Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_id\": '',\n    \"account_type\": \"External Checking\",\n    \"balance\": 400.00\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -417,7 +477,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"amount\": 300.00\n}",
+							"raw": "{\n    \"amount\": 200.00\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -442,7 +502,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "589d3ea0-f222-4c84-8590-2a75067567d7"
+									"value": "b5fd5ccc-d757-4759-bccf-878403bb8b93"
 								}
 							]
 						}

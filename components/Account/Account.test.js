@@ -7,62 +7,6 @@ const { getAccounts, getCustomers } = require('../../hooks/useData');
 const app = require('../../app');
 
 describe('Testing Accounts', () => {
-  //   describe('/GET Accounts for Customer by ID', () => {
-  //     it('Retrieves no accounts for a customer using provided ID', async () => {
-  //       const response1 = await request(app)
-  //         .get('/api/v1/customers')
-  //         .set('Accept', 'application/json')
-  //         .expect('Content-Type', /json/)
-  //         .expect(200);
-
-  //       expect(response1.body).to.be.a('object');
-  //       expect(response1.body.data).to.be.a('array');
-  //       // Enure the array is not empty
-  //       expect(response1.body.data.length).to.be.gt(0);
-
-  //       // Get the ID of first customer in the array
-  //       const customerid = response1.body.data[0].id;
-
-  //       const response2 = await request(app)
-  //         .get(`/api/v1/accounts/customers/gibberish`)
-  //         .set('Accept', 'application/json')
-  //         .expect('Content-Type', /json/)
-  //         .expect(404);
-
-  //       expect(response2.body).to.be.a('object');
-  //       expect(response2.body.data).to.be.a('array');
-  //       expect(response2.body.data.id).to.be.equal(`${customerid}`);
-  //     });
-  //   });
-
-  //   describe('/GET Customer by ID', () => {
-  //     it('Retrieves a customer by ID', async () => {
-  //       const response1 = await request(app)
-  //         .get('/api/v1/customers')
-  //         .set('Accept', 'application/json')
-  //         .expect('Content-Type', /json/)
-  //         .expect(200);
-
-  //       expect(response1.body).to.be.a('object');
-  //       expect(response1.body.data).to.be.a('array');
-  //       // Enure the array is not empty
-  //       expect(response1.body.data.length).to.be.gt(0);
-
-  //       // Get the ID of first customer in the array
-  //       const customerId = response1.body.data[0].id;
-
-  //       const response2 = await request(app)
-  //         .get(`/api/v1/customers/ids/${customerId}`)
-  //         .set('Accept', 'application/json')
-  //         .expect('Content-Type', /json/)
-  //         .expect(200);
-
-  //       expect(response2.body).to.be.a('object');
-  //       expect(response2.body.data).to.be.a('object');
-  //       expect(response2.body.data.id).to.be.equal(`${customerId}`);
-  //     });
-  //   });
-
   /**
    * Test POST Routes
    */
@@ -273,10 +217,6 @@ describe('Testing Accounts', () => {
 
   /*
    * Test GET Routes
-   */
-
-  /*
-   * Test the GET Routes
    */
   describe('/GET No Accounts for Customer by ID', () => {
     it('Retrieves no accounts for a non-existent customer ID', async () => {

@@ -2,6 +2,7 @@ const AccountService = require('./AccountService');
 
 class AccountController {
   async getAccounts(req, res) {
+    // #swagger.tags = ["Account"]
     // #swagger.description = 'Retrieves a list of accounts'
     try {
       let page = req.query?.page || 0;

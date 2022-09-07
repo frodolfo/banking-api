@@ -7,7 +7,11 @@ class CustomerDAL {
    */
   async getCustomers(pageNum, maxRecords) {
     let pageOffset = !isNaN(pageNum) ? (pageNum > 0 ? pageNum - 1 : 0) : 0;
-    let maxPerPage = !isNaN(maxRecords) ? (maxRecords > 0 ? maxRecords : 1) : 1;
+    let maxPerPage = !isNaN(maxRecords)
+      ? maxRecords > 0
+        ? maxRecords
+        : 10
+      : 10;
 
     try {
       const customers = await db('customers')
